@@ -24,7 +24,7 @@ void fft(vector<complex<double>> &f, int inv) {
   }
 }
 
-int solution1() {
+int main() {
   int n, m;
   cin >> n >> m;                            // n, m 为f(x)和g(x)的最高次
   int len = pow(2, ceil(log2(n + m + 1)));  // 调整结果的长度为2的幂次
