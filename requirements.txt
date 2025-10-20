@@ -1,5 +1,4 @@
 mkdocs-material
 mkdocs-jupyter
-mkdocs-awesome-pages-plugin
-mkdocs-blog-plugin
-mkdocs-meta-descriptions-plugin
+mkdocs-awesome-nav
+mkdocs-git-revision-date-localized-plugin

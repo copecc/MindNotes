@@ -113,7 +113,7 @@ plugins:
   - awesome-nav
   - search
   - blog
-  # - git-revision-date-localized
+  - git-revision-date-localized
 
 
 extra_javascript:
