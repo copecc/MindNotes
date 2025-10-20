@@ -4,7 +4,9 @@ site_author: Cope Chan
 site_url: https://copecc.github.io/MindNotes/
 
 repo_name: Mind Notes
-repo_url: https://github.com/copecc/MindNotes.git
+repo_url: https://github.com/copecc/MindNotes
+
+edit_uri: edit/main/docs/
 
 theme:
   name: material
@@ -27,6 +29,7 @@ theme:
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
+
   features:
     # - navigation.instant # mess up mathjax rendering
     # - navigation.instant.progress
@@ -44,6 +47,8 @@ theme:
     - content.code.annotate # Enable annotations on code blocks
     - content.tabs.link # Enable linking and switching to the same label
     - content.tooltips
+    - content.action.edit
+    - content.action.view
 
 markdown_extensions:
   # Admonitions
@@ -101,7 +106,8 @@ markdown_extensions:
   # Math: MathJax
   - pymdownx.arithmatex
   - toc:
-      slugify: !!python/object/apply:pymdownx.slugs.slugify {kwds: {case: lower}}
+      slugify:
+        !!python/object/apply:pymdownx.slugs.slugify { kwds: { case: lower } }
       permalink: ⚓︎
       toc_depth: 3
   - pymdownx.betterem
@@ -112,9 +118,29 @@ plugins:
   - meta
   - awesome-nav
   - search
+  - minify:
+      minify_html: true
+      minify_js: true
+      minify_css: true
+      htmlmin_opts:
+          remove_comments: true
+      cache_safe: true
   - blog
-  - git-revision-date-localized
-
+  - git-revision-date-localized:
+      enable_creation_date: true
+  - glightbox:
+      auto_caption: true
+      caption_position: bottom
+      # display_description: true
+      touchNavigation: true
+      loop: true
+      effect: zoom
+      width: 100%
+      height: auto
+      zoomable: true
+      draggable: true
+  - toggle-sidebar:
+      toggle_button: all
 
 extra_javascript:
   # MathJax JavaScript
@@ -126,7 +152,6 @@ extra_javascript:
   # - https://cdn.jsdelivr.net/npm/katex@0/dist/katex.min.js
   # - https://cdn.jsdelivr.net/npm/katex@0/dist/contrib/auto-render.min.js
   # - https://cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js
-
 
 extra_css:
   - assets/stylesheets/extra.css
