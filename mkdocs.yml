@@ -1,0 +1,134 @@
+site_name: Mind Notes
+site_description: 个人博客 / 技术笔记 / 灵感随笔
+site_author: Cope Chan
+site_url: https://copecc.github.io/
+
+repo_name: Mind Notes
+repo_url: https://github.com/copecc/MindNotes.git
+
+theme:
+  name: material
+  custom_dir: overrides
+  icon:
+    logo: assets/田园犬
+  favicon: favicon.svg
+  language: zh
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    # - navigation.instant # mess up mathjax rendering
+    # - navigation.instant.progress
+    - navigation.tabs
+    - navigation.tabs.sticky
+    # - navigation.prune
+    - navigation.indexes
+    - toc.follow
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - search.share
+    - navigation.footer # Enable footer navigation
+    - content.code.copy # Enable copy button on code blocks
+    - content.code.annotate # Enable annotations on code blocks
+    - content.tabs.link # Enable linking and switching to the same label
+    - content.tooltips
+
+markdown_extensions:
+  # Admonitions
+  - admonition
+  - pymdownx.details
+  # Annotations
+  - attr_list
+  - md_in_html
+  # Code blocks
+  - pymdownx.highlight:
+      anchor_linenums: true
+      use_pygments: true
+      pygments_lang_class: true
+      auto_title: true
+      linenums: true
+      linenums_style: pymdownx-inline
+      line_spans: __span
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      base_path:
+        - docs/snippets
+      check_paths: true
+      encoding: utf-8
+  # Content tabs
+  - pymdownx.tabbed:
+      alternate_style: true
+      combine_header_slug: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - tables
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - footnotes
+  # Formatting
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      options:
+        custom_icons:
+          - overrides/.icons
+  # Lists
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+      clickable_checkbox: true
+  # Math: MathJax
+  - pymdownx.arithmatex
+  - toc:
+      slugify: !!python/object/apply:pymdownx.slugs.slugify {kwds: {case: lower}}
+      permalink: ⚓︎
+      toc_depth: 3
+  - pymdownx.betterem
+  - pymdownx.blocks.caption
+  - pymdownx.smartsymbols
+
+plugins:
+  - meta
+  - awesome-nav
+  - search
+  - blog
+  # - git-revision-date-localized
+
+
+extra_javascript:
+  # MathJax JavaScript
+  - javascripts/mathjax.js
+  # - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js # v3
+  - https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js
+  # KaTeX JavaScript
+  # - javascripts/katex.js
+  # - https://cdn.jsdelivr.net/npm/katex@0/dist/katex.min.js
+  # - https://cdn.jsdelivr.net/npm/katex@0/dist/contrib/auto-render.min.js
+  # - https://cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js
+
+
+extra_css:
+  - assets/stylesheets/extra.css
+  # KaTeX CSS
+  # - https://cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css

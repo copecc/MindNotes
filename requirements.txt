@@ -1,0 +1,5 @@
+mkdocs-material
+mkdocs-jupyter
+mkdocs-awesome-pages-plugin
+mkdocs-blog-plugin
+mkdocs-meta-descriptions-plugin
