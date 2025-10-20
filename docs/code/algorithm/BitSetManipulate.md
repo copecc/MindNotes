@@ -115,3 +115,5 @@ tags:
       }
     };
     ```
+
+![二进制基础](./BinaryFundamentals.png)
