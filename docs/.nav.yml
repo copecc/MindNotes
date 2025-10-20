@@ -1,0 +1,6 @@
+sort:
+  direction: asc
+  sections: first
+  type: natural
+
+flatten_single_child_sections: true
