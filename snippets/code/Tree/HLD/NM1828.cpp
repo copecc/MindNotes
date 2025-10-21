@@ -111,7 +111,7 @@ int main() {
   };
   decompose(decompose, 1, 1);  // 重链剖分, 根节点为1, 链顶为自己
 
-  segment_tree seg(n + 1);
+  segment_tree seg(n);
   seg.build(1, 1, n, nums, rank, colors);
 
   auto query_path = [&](int64_t u, int64_t v) {

@@ -114,7 +114,7 @@ int main() {
   };
   decompose(decompose, r, r);  // 重链剖分, 根节点为r, 链顶为自己
 
-  segment_tree seg(n + 1, p);
+  segment_tree seg(n, p);
   seg.build(1, 1, n, nums, rank);  // 根据dfn构建线段树, 注意rank将dfn映射回节点编号
 
   auto path_sum = [&](int64_t u, int64_t v) {
