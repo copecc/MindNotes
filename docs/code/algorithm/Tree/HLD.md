@@ -37,6 +37,8 @@ tags:
       - 对于路径操作，最后一步排除 $\text{LCA}$ 节点，即最后查询的是 $[dfn[u] + 1, dfn[v]]$。
       - 对于子树操作，排除根节点，即查询的是 $[dfn[u] + 1, dfn[u] + size[u] - 1]$。
 
+    练习见[航线规划](https://www.luogu.com.cn/problem/P2542){target=_blank}，代码见[时光倒流](../Trick/BackInTime.md)。
+
 ???+ note "[【模板】重链剖分/树链剖分](https://www.luogu.com.cn/problem/P3384){target=_blank}"
     
     已知一棵包含 $N$ 个结点的树（连通且无环），每个节点上包含一个数值，需要支持以下操作：
