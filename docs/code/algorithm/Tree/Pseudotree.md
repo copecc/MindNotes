@@ -7,7 +7,7 @@ tags:
 
 # 基环树
 
-对于一个连通图 $G$，如果其点数与边数相等，那我们便称它为一个基环树（$\text{Pseudotree}$）。也就是说，基环树是一个包含恰好一个环的连通图。
+对于一个连通图 $G$，如果其点数与边数相等，称它为一个基环树（$\text{Pseudotree}$）。也就是说，基环树是一个包含恰好一个环的连通图。
 
 ??? note "[发现环](https://www.luogu.com.cn/problem/P8655){target='_blank'}"
 

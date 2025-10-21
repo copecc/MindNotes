@@ -20,7 +20,7 @@ tags:
 
 ## 整合子树信息
 
-整合子树信息是树形动态规划的关键步骤。假设我们有一个节点 $u$，它有若干个子节点 $v_1, v_2, \ldots, v_k$。每个子节点 $v_i$ 都有一个状态值 $dp[v_i]$，表示从子节点 $v_i$ 出发的某种最优解。
+整合子树信息是树形动态规划的关键步骤。假设有一个节点 $u$，它有若干个子节点 $v_1, v_2, \ldots, v_k$。每个子节点 $v_i$ 都有一个状态值 $dp[v_i]$，表示从子节点 $v_i$ 出发的某种最优解。
 
 ??? note "[最大BST子树](https://leetcode.cn/problems/largest-bst-subtree/description/){target=_blank}"
     给定一个二叉树，找到其中最大的搜索二叉子树（$\text{BST}$），并返回该子树的大小。
