@@ -2,6 +2,8 @@
 hide:
   - navigation
   - toc
+comments: false
 ---
 
-# Home
+# 主页
+

@@ -5,3 +5,4 @@ mkdocs-git-revision-date-localized-plugin
 mkdocs-glightbox
 mkdocs-toggle-sidebar-plugin
 mkdocs-minify-plugin
+mkdocs-macros-plugin

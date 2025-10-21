@@ -141,6 +141,8 @@ plugins:
       draggable: true
   - toggle-sidebar:
       toggle_button: all
+  - macros:
+      include_dir: overrides/partials
 
 extra_javascript:
   # MathJax JavaScript
