@@ -37,8 +37,6 @@ tags:
       - 对于路径操作，最后一步排除 $\text{LCA}$ 节点，即最后查询的是 $[dfn[u] + 1, dfn[v]]$。
       - 对于子树操作，排除根节点，即查询的是 $[dfn[u] + 1, dfn[u] + size[u] - 1]$。
 
-    练习见[航线规划](https://www.luogu.com.cn/problem/P2542){target=_blank}，代码见[时光倒流](../Trick/BackInTime.md)。
-
 ???+ note "[【模板】重链剖分/树链剖分](https://www.luogu.com.cn/problem/P3384){target=_blank}"
     
     已知一棵包含 $N$ 个结点的树（连通且无环），每个节点上包含一个数值，需要支持以下操作：
@@ -71,10 +69,21 @@ tags:
 
 ??? note "[树上最小公倍数追踪](https://niumacode.com/problem/P1828){target=_blank}"
 
-    给定一棵有 $N$ 个节点的树和 $M$ 个查询，每个查询包含两个节点 $x$ 和 $y$，要求找出这两个节点的路径上所有节点值的最小公倍数。树的根节点为 $1$，节点编号从 $1$ 到 $N$。
+    给定一棵有 $N$ 个节点的树和 $M$ 个查询，每个节点为黑色或白色，操作包括两种：
+    
+    1. 将节点 $x$ 的颜色在黑色和白色之间切换。
+    2. 查询节点 $x$ 和节点 $y$ 之间路径上所有黑色节点值的最小公倍数。
 
     !!! warning "需要网站会员提交"
 
     ```cpp
     --8<-- "code/Tree/HLD/NM1828.cpp"
+    ```
+
+??? note "[Grass Planting G](https://www.luogu.com.cn/problem/P3038){target=_blank}"
+
+    给定一棵有 $n$ 个节点的树，以及 $m$ 个操作，每个操作要么在 $u$ 和 $v$ 之间的边权加 $1$，要么查询 $u$ 和 $v$ 之间的边权和。初始时，所有边权均为 $0$。
+
+    ```cpp
+    --8<-- "code/Tree/HLD/P3038.cpp"
     ```
