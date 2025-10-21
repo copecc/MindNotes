@@ -12,4 +12,4 @@
 ## 📖 在线文档
 
 访问博客文档：  
-[https://copecc.github.io/MindNotes/](https://copecc.github.io/MindNotes/)
+[https://copecc.github.io/MindNotes/](https://copecc.github.io/MindNotes/){target="_blank"}
