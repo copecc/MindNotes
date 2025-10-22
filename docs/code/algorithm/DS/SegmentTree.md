@@ -208,7 +208,3 @@ tags:
 ## 动态开点线段树
 
 动态开点线段树（$\text{Dynamic Segment Tree}$）适用于处理大范围的区间查询和更新操作，尤其是在值域较大但实际使用的点较少的情况下。动态开点线段树通过按需创建节点来节省空间。
-
-可持久化线段树（$\text{Persistent Segment Tree}$）的实现类似于动态开点线段树，但每次更新都会创建新的节点，从而保留历史版本的信息。
-
-实现见 "[可持久化线段树](../Persistency/SegmentTree.md){target=_blank}"。
