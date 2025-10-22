@@ -71,7 +71,7 @@ $$
         将数组中的 $0$ 替换为 $-1$，然后计算前缀和。对于任意两个前缀和相等的位置 $i$ 和 $j$，子数组 $nums[i+1 \ldots j]$ 中 $0$ 和 $1$ 的数量相同。通过记录每个前缀和第一次出现的位置，可以在遍历数组时计算出最长的满足条件的子数组长度。
 
     ```cpp
-    --8<-- "code/Trick/ElementCount/contiguous-array.cpp"
+    --8<-- "code/Trick/ElementCount/L525.cpp"
     ```
 
 ??? note "[每个元音包含偶数次的最长子字符串](https://leetcode.cn/problems/find-the-longest-substring-containing-vowels-in-even-counts/description/){target=_blank}"
@@ -83,7 +83,7 @@ $$
         将每个元音字母的出现次数视为一个状态，使用一个整数表示每个状态的奇偶性。通过记录每个状态第一次出现的位置，可以在遍历字符串时计算出最长的满足条件的子字符串长度。
 
     ```cpp
-    --8<-- "code/Trick/ElementCount/find-the-longest-substring-containing-vowels-in-even-counts.cpp"
+    --8<-- "code/Trick/ElementCount/L1371.cpp"
     ```
 
 ??? note "[最长的平衡子串 II](https://leetcode.cn/problems/longest-balanced-substring-ii/description/){target=_blank}"
@@ -95,7 +95,7 @@ $$
         分别讨论只有一种字符、两种字符和三种字符的情况。对于两种字符的情况，可以使用类似于连续数组的方法，计算两个字符出现次数的差值，并记录每个差值第一次出现的位置。对于三种字符的情况，可以使用一个二维状态表示三个字符的出现次数差值，并记录每个状态第一次出现的位置。
 
     ```cpp
-    --8<-- "code/Trick/ElementCount/longest-balanced-substring-ii.cpp"
+    --8<-- "code/Trick/ElementCount/L3714.cpp"
     ```
 
 ??? note "[最长平衡子数组 II](https://leetcode.cn/problems/longest-balanced-subarray-ii/description/){target=_blank}"
@@ -116,5 +116,5 @@ $$
         
 
     ```cpp
-    --8<-- "code/Trick/ElementCount/longest-balanced-subarray-ii.cpp"
+    --8<-- "code/Trick/ElementCount/L3721.cpp"
     ```

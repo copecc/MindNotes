@@ -28,7 +28,7 @@ tags:
     !!! warning "Leetcode Premium"
 
     ```cpp
-    --8<-- "code/DP/Tree/largest-bst-subtree.cpp"
+    --8<-- "code/DP/Tree/L333.cpp"
     ```
 
 ## 最小点覆盖
@@ -232,6 +232,6 @@ $$
     给定一个无向连通树，计算每个节点到其他所有节点的距离之和。
 
     ```cpp
-    --8<-- "code/DP/Tree/sum-of-distances-in-tree.cpp"
+    --8<-- "code/DP/Tree/L834.cpp"
     ```
 

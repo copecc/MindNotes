@@ -73,8 +73,10 @@ $lowbit$ 只对正整数有意义（取二进制表示中最低的 $1$）。$x=0
 
 ??? note "[二维区域和检索 - 可变](https://leetcode.cn/problems/range-sum-query-2d-mutable/){target=_blank}"
 
+    !!! warning "Leetcode Premium"
+
     ```cpp
-    --8<--  "code/DS/BIT/range-sum-query-2d-mutable.cpp"
+    --8<--  "code/DS/BIT/L308.cpp"
     ```
 
 ## 二维区间更新、区间查询

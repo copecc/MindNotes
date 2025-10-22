@@ -94,7 +94,7 @@ $\text{KMP}$（$\text{Knuth-Morris-Pratt}$）算法通过预处理模式字符�
 ??? note "[找出字符串中第一个匹配项的下标](https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/description/){target=_blank}"
 
     ```cpp
-    --8<-- "code/String/StringMatch/find-the-index-of-the-first-occurrence-in-a-string.cpp"
+    --8<-- "code/String/StringMatch/L28.cpp"
     ```
 
 ??? note "[最短回文串](https://leetcode.cn/problems/shortest-palindrome/description/){target=_blank}"
@@ -102,7 +102,7 @@ $\text{KMP}$（$\text{Knuth-Morris-Pratt}$）算法通过预处理模式字符�
     若字符串 $s$ 的最长回文前缀的长度为 $len$，那么 $s[0 \ldots len-1]$ 是一个回文串，剩余部分（不属于回文前缀的部分）需要被反转并添加到 $s$ 的前面，才能使整个字符串成为回文串。
 
     ```cpp
-    --8<-- "code/String/StringMatch/shortest-palindrome.cpp"
+    --8<-- "code/String/StringMatch/L214.cpp"
     ```
 
 ### 最小循环节
@@ -288,7 +288,7 @@ $E$ 函数的计算具体步骤如下：
         由于后面加的 $k$ 个字符是任意的，因此只要考虑每次移除前 $k$ 个字符之后是否能够完全和原字符串的前缀匹配即可。
 
     ```cpp
-    --8<-- "code/String/StringMatch/minimum-time-to-revert-word-to-initial-state-ii.cpp"
+    --8<-- "code/String/StringMatch/L3031.cpp"
     ```
 
 ## AC 自动机

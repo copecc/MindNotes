@@ -207,7 +207,7 @@ $$
         返回完全子集所能取到的 最大元素和 。
 
         ```cpp
-        --8<-- "code/Math/Möbius/maximum-element-sum-of-a-complete-subset-of-indices.cpp"
+        --8<-- "code/Math/Möbius/L2862.cpp"
         ```
 
 

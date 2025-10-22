@@ -39,7 +39,7 @@ tags:
     给你一个下标从 $0$ 开始的整数数组 $favorite$，其中 $favorite[i]$ 表示第 $i$ 位员工喜欢的员工。请你返回参加会议的最多员工数目。
 
     ```cpp
-    --8<-- "code/Tree/PseudoTree/maximum-employees-to-be-invited-to-a-meeting.cpp"
+    --8<-- "code/Tree/PseudoTree/L2127.cpp"
     ```
     {.annotate}
 

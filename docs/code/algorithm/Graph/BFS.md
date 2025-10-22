@@ -67,7 +67,7 @@ $\text{0-1 BFS}$ 的基本思想是使用双端队列（$\text{Deque}$）来存�
     给定一个二维网格 $grid$，其中 $0$ 表示空地，$1$ 表示障碍物。你可以从一个格子移动到其相邻的上、下、左、右四个格子。你需要找到从左上角 $(0, 0)$ 到右下角 $(m-1, n-1)$ 的路径上需要移除的障碍物的最小数目。
 
     ```cpp
-    --8<-- "code/Graph/BFS/minimum-obstacle-removal-to-reach-corner.cpp"
+    --8<-- "code/Graph/BFS/L2290.cpp"
     ```
 
 ??? note "[网格传送门旅游](https://leetcode.cn/problems/grid-teleportation-traversal/description/){target=_blank}"
@@ -81,7 +81,7 @@ $\text{0-1 BFS}$ 的基本思想是使用双端队列（$\text{Deque}$）来存�
         传送门只能使用一次，因此需要一个额外的数组来记录每个传送门是否已经被使用过（或者使用传送门之后将该传送门对应的所有节点从图中删除）。
 
     ```cpp
-    --8<-- "code/Graph/BFS/grid-teleportation-traversal.cpp"
+    --8<-- "code/Graph/BFS/L3552.cpp"
     ```
 
 ## 双向 BFS
@@ -101,5 +101,5 @@ $\text{0-1 BFS}$ 的基本思想是使用双端队列（$\text{Deque}$）来存�
     - 注意：$\text{beginWord}$ 不需要在字典中。
 
     ```cpp
-    --8<-- "code/Graph/BFS/word-ladder.cpp"
+    --8<-- "code/Graph/BFS/L127.cpp"
     ```

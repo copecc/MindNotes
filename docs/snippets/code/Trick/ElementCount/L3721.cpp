@@ -65,26 +65,26 @@ class Solution {
  public:
   int longestBalanced(vector<int> &nums) {
     int n = nums.size();
-    segment_tree seg_tree(n + 2);  // 前缀和，区间为 [1, n+1]
+    segment_tree seg_tree(n + 1);  // 前缀和，区间为 [0, n]
     unordered_map<int, int> last;
     int ans = 0, sum = 0;
-    for (int i = 1; i <= n; ++i) {  // 1-based
-      int x = nums[i - 1];
+    for (int i = 0; i < n; ++i) {
+      int x = nums[i];
       int v = (x % 2 == 0) ? 1 : -1;
       if (!last.contains(x)) {
         sum += v;  // 维护前缀和
-        // [i+1, n+1], 第i+1个位置表示前i个数的前缀和
-        seg_tree.range_add(i + 1, n + 1, v, 1, 1, n + 1);
+        // [i+1, n], 第i+1个位置表示前i个数的前缀和
+        seg_tree.range_add(i + 1, n, v, 1, 0, n);
       } else {
         int pre = last[x];  // 上次出现位置
-        // 取消上次出现的影响, 上一次x出现的位置影响了区间 [pre+1, n+1]
-        // 当前x的位置影响了区间 [i+1, n+1]，把[pre+1, i]的值减去v
-        seg_tree.range_add(pre + 1, i, -v, 1, 1, n + 1);
+        // 取消上次出现的影响, 上一次x出现的位置影响了区间 [pre+1, n]
+        // 当前x的位置影响了区间 [i+1, n]，把[pre+1, i]的值减去v
+        seg_tree.range_add(pre + 1, i, -v, 1, 0, n);
       }
       last[x] = i;
       // 查找前缀和等于sum的最左位置, 第i个位置表示前i-1个数的前缀和
-      int pos = seg_tree.find_first(1, i, sum, 1, 1, n + 1);
-      if (pos >= 1) { ans = std::max(ans, i - pos + 1); }
+      int pos = seg_tree.find_first(0, i, sum, 1, 0, n);
+      if (pos >= 0) { ans = std::max(ans, i - pos + 1); }
     }
     return ans;
   }

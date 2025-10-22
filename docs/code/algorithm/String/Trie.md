@@ -161,5 +161,5 @@ tags:
     !!! tip "$\text{0-1}$字典树"
 
     ```cpp
-        --8<-- "code/String/Trie/maximum-xor-of-two-numbers-in-an-array.cpp"
+        --8<-- "code/String/Trie/L421.cpp"
     ```

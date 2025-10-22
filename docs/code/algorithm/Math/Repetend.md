@@ -52,7 +52,7 @@ tags:
     如果小数部分为循环小数，则将循环的部分括在括号内。
 
     ```cpp
-    --8<-- "code/Math/Repetend/fraction-to-recurring-decimal.cpp"
+    --8<-- "code/Math/Repetend/L166.cpp"
     ```
 
 

@@ -42,13 +42,13 @@ $$
     === "记忆化搜索"
 
         ```cpp
-        --8<-- "code/DP/State/partition-to-k-equal-sum-subsets_1.cpp"
+        --8<-- "code/DP/State/L698_1.cpp"
         ```
 
     === "递推"
 
         ```cpp
-        --8<-- "code/DP/State/partition-to-k-equal-sum-subsets_2.cpp"
+        --8<-- "code/DP/State/L698_2.cpp"
         ```
 
 ## 轮廓线 DP
@@ -125,5 +125,5 @@ $m$ 列的状态可用一个整数 $s$ 表示，$s$ 的三进制展开的每一�
     返回你给网格涂色的方案数。由于答案可能很大，请你返回方案数对 $10^9 + 7$ 取余的结果。
 
     ```cpp
-    --8<-- "code/DP/State/ainting-a-grid-with-three-different-colors.cpp"
+    --8<-- "code/DP/State/L1931.cpp"
     ```
