@@ -22,7 +22,7 @@ tags:
 ???+ note "[【模板】可持久化线段树 1（可持久化数组）](https://www.luogu.com.cn/problem/P3919){target=_blank}"
 
     ```cpp
-    --8<-- "code/Persistency/SegmentTree/P3919.cpp"
+    --8<-- "code/PDS/SegmentTree/P3919.cpp"
     ```
 
 ## 可持久化权值线段树
@@ -39,7 +39,7 @@ tags:
         4. 查询时，利用两个版本的线段树（区间的左右端点对应的版本）进行差分，计算出区间内每个子区间的元素数量，从而定位第 $k$ 小的元素。
 
     ```cpp
-    --8<-- "code/Persistency/SegmentTree/P3834.cpp"
+    --8<-- "code/PDS/SegmentTree/P3834.cpp"
     ```
 
 ??? note "[Buratsuta 3](https://codeforces.com/contest/2149/problem/G){target=_blank}"
@@ -47,7 +47,7 @@ tags:
     查询区间内所有出现次数超过三分之一（$\lfloor \frac{r - l + 1}{3} \rfloor$）的元素。
 
     ```cpp
-    --8<-- "code/Persistency/SegmentTree/CF2149G.cpp"
+    --8<-- "code/PDS/SegmentTree/CF2149G.cpp"
     ```
 
 ## 标记永久化
@@ -57,7 +57,7 @@ tags:
 ??? note "[【模板】线段树 1](https://www.luogu.com.cn/problem/P3372){target=_blank}"
 
     ```cpp
-    --8<-- "code/Persistency/SegmentTree/P3372.cpp"
+    --8<-- "code/PDS/SegmentTree/P3372.cpp"
     ```
 
 ## 范围修改可持久
@@ -69,7 +69,7 @@ tags:
     === "克隆标记"
 
         ```cpp
-        --8<-- "code/Persistency/SegmentTree/TTM_1.cpp"
+        --8<-- "code/PDS/SegmentTree/TTM_1.cpp"
         ```
 
     === "标记永久化"
@@ -79,5 +79,5 @@ tags:
             通过标记永久化可以减少范围修改可持久线段树的占用空间，因为每次更新只需要克隆受影响的节点，而不需要克隆整个路径上的所有节点，从而节省了空间。
 
         ```cpp
-        --8<-- "code/Persistency/SegmentTree/TTM_2.cpp"
+        --8<-- "code/PDS/SegmentTree/TTM_2.cpp"
         ```
