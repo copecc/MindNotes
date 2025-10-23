@@ -118,31 +118,34 @@ plugins:
   - meta
   - awesome-nav
   - search
-  - minify:
-      minify_html: true
-      minify_js: true
-      minify_css: true
-      htmlmin_opts:
-          remove_comments: true
-      cache_safe: true
   - blog
-  - git-revision-date-localized:
-      enable_creation_date: true
-  - glightbox:
-      auto_caption: true
-      caption_position: bottom
-      # display_description: true
-      touchNavigation: true
-      loop: true
-      effect: zoom
-      width: 100%
-      height: auto
-      zoomable: true
-      draggable: true
-  - toggle-sidebar:
-      toggle_button: all
-  - macros:
-      include_dir: overrides/partials
+  - group: # Conditional plugins
+      enabled: !ENV CI
+      plugins:
+        - minify:
+            minify_html: true
+            minify_js: true
+            minify_css: true
+            htmlmin_opts:
+              remove_comments: true
+            cache_safe: true
+        - git-revision-date-localized:
+            enable_creation_date: true
+        - macros:
+            include_dir: overrides/partials
+        - toggle-sidebar:
+            toggle_button: all
+        - glightbox:
+            auto_caption: true
+            caption_position: bottom
+            # display_description: true
+            touchNavigation: true
+            loop: true
+            effect: zoom
+            width: 100%
+            height: auto
+            zoomable: true
+            draggable: true
 
 extra_javascript:
   # MathJax JavaScript
