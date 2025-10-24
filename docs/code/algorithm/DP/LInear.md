@@ -1,12 +1,15 @@
 ---
-title: 序列 DP
+title: 线性 DP
 tags:
+  - Linear DP
   - Max Sequence Sum
   - Longest Increasing Subsequence
   - LIS
 ---
 
-# 序列型动态规划
+# 线性动态规划
+
+线性动态规划是动态规划的一种特殊情况，主要用于解决具有线性结构的问题，如数组、字符串等。线性动态规划通常可以通过一维数组来实现状态的转移，具有较低的空间复杂度。
 
 ## 最大子数组和
 
