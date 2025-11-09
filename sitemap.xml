@@ -2,270 +2,274 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://copecc.github.io/MindNotes/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/blog/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/BitSetManipulate/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Discretization/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Game/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/MooreVoting/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/PrefixAndDifference/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Sort/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/DC/BinarySearch/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/DC/Bitwise/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/DC/CDQ/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/DC/FFT/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/DC/FracProgramming/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/DC/ParallelBS/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/DC/SegmentTree/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/DP/Digit/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/DP/Interval/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/DP/Knapsack/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
-         <loc>https://copecc.github.io/MindNotes/code/algorithm/DP/Sequence/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <loc>https://copecc.github.io/MindNotes/code/algorithm/DP/LInear/</loc>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/DP/StateCompression/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/DP/Tree/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/DS/BIT/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
+    </url>
+    <url>
+         <loc>https://copecc.github.io/MindNotes/code/algorithm/DS/Block/</loc>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/DS/DSU/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/DS/MonotoneStack/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/DS/ST/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/DS/SegmentTree/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Graph/%20CongruenceShortestPath/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Graph/BFS/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Graph/Build/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Graph/Connectivity/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Graph/DifferenceConstraints/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Graph/EulerPath/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Graph/MST/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Graph/ShortestPath/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Graph/TopoSort/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Math/Cattelan/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Math/Combination/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Math/GCD/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Math/Gauss/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Math/Inverse/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Math/JosephRing/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Math/LinearBasis/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Math/MEX/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Math/M%C3%B6bius/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Math/PerfectShuffle/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Math/Permutation/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Math/PermutationCycle/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Math/Prime/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Math/QuickPow/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Math/Repetend/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/PDS/DSU/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/PDS/SegmentTree/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/PDS/Trie/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/String/StringMatch/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/String/StringMultiply/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/String/Trie/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Tree/Centroid/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Tree/DSU/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Tree/Diameter/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Tree/Difference/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Tree/HLD/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Tree/LCA/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Tree/Pseudotree/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Tree/Traversal/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Trick/BackInTime/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
     <url>
          <loc>https://copecc.github.io/MindNotes/code/algorithm/Trick/ElementCount/</loc>
-         <lastmod>2025-10-24</lastmod>
+         <lastmod>2025-11-09</lastmod>
     </url>
 </urlset>
