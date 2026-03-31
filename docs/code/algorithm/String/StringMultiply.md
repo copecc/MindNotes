@@ -1,7 +1,9 @@
 ---
 title: 字符串乘法
 tags:
-  - multiply
+  - 字符串乘法
+  - String Multiply
+  - Multiply Strings
 ---
 
 # 字符串乘法
@@ -11,7 +13,7 @@ tags:
 对于长为 $m$ 和 $n$ 的整数字符串 $num1$，$num2$，考虑第 $i$ 位和第 $j$ 位的乘积，产生乘积个位应该落在索引 $i+j+1$ 处，十位在索引 $i+j$ 处。  
 再考虑进位，那么应该将索引 $i+j+1$ 处置为 $(num1[i]*num2[j]+carry) \% 10$，然后索引 $i+j$ 处记上进位 $(num1[i]*num2[j]+carry) / 10$。
 
-???+ notes "模拟笔算"
+???+ note "模拟笔算"
 
     ```cpp
     std::string multiply(const std::string &num1, const std::string &num2) {
@@ -42,7 +44,7 @@ tags:
 
 对于结果中的第 $i$ 位（假设从右数起），由所有满足 $j+q=i$ 的位相乘后相加得到（再加上 $i-1$ 位的进位）。
 
-???+ notes "逆向"
+???+ note "逆向"
 
     ```cpp
     #include <algorithm>

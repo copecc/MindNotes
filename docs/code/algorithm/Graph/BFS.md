@@ -6,7 +6,6 @@ tags:
   - 0-1 BFS
   - 双向 BFS
   - Bidirectional BFS
-  - Meet in the Middle
 ---
 
 # 广度优先搜索 (BFS)

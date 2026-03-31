@@ -1,7 +1,8 @@
 ---
 title: 建图
 tags:
-  - Build Graph
+  - 建图
+  - Graph Construction
 ---
 
 # 建图

@@ -1,6 +1,7 @@
 ---
 title: 最小生成树
 tags:
+  - 最小生成树
   - Minimum Spanning Tree
   - MST
 ---
