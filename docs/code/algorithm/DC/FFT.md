@@ -15,11 +15,11 @@ tags:
 
 $\text{FFT}$ 算法的基本思想是分治。就 $\text{DFT}$ 来说，它分治地来求当 $x = \omega_n^k$ 的时候 $f(x)$ 的值。
 
-$\text{FFT}$ 算法的分治思想体现在将多项式分为奇次项和偶次项处理，分别用奇偶次次项数建立新的函数：$f(x) = Even(x^2) + x * Odd(x^2)$。
+$\text{FFT}$ 算法的分治思想体现在将多项式分为奇次项和偶次项处理，分别用奇偶次项系数建立新的函数：$f(x) = Even(x^2) + x * Odd(x^2)$。
 
 其中$Even(x) = \sum a_{2i}x^i$，$Odd(x) = \sum a_{2i+1}x^i$。
 
-利用偶数次单位根的性质 $\omega^i_n = -\omega^{i + n/2}_n$，而$Even\left(x^2\right)$和$Odd\left(x^2\right)$是偶函数，因此在复平面上 $\omega^i_n$ 和 $\omega^{i+n/2}_n$ 对应的 $Even(x^2)$ 和 $Odd(x^2)$ 的值相同。以下推导中，令 $n$ 为多项式的次数，$k$ 为当前求值的下标。
+利用偶数次单位根的性质 $\omega^i_n = -\omega^{i + n/2}_n$，并注意 $Even(x^2)$ 和 $Odd(x^2)$ 只依赖于 $x^2$，因此在复平面上 $\omega^i_n$ 和 $\omega^{i+n/2}_n$ 对应的 $Even(x^2)$ 和 $Odd(x^2)$ 的值相同。以下推导中，令 $n$ 为变换长度，$k$ 为当前求值的下标。
 
 $$
 \begin{aligned}
@@ -202,5 +202,4 @@ $$
 $\text{NTT}$ 通过将离散傅立叶变换化为 $F={\mathbb {Z}/p}$，整数模质数 $p$。这是一个有限域，只要 $n$ 可除 $p-1$，就存在本原 $n$ 次方根，所以有 $p=\xi n+1$。
 
 具体来说，对于质数 $p=qn+1 (n=2^m)$，原根 $g$ 满足 $g^{qn} \equiv 1 \pmod p$, 将 $g_n=g^q\pmod p$ 看做 $\omega_n$ 的等价，则其满足相似的性质，比如 $g_n^n \equiv 1 \pmod p, g_n^{n/2} \equiv -1 \pmod p$。
-
 
