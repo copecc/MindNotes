@@ -1,8 +1,11 @@
 ---
 title: 元素计数
 tags:
+  - 元素计数
   - Element Count
+  - 不同元素计数
   - Unique Count
+  - 频次平衡
   - Balanced Frequency
 ---
 
