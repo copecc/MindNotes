@@ -1,6 +1,8 @@
 ---
 title: 数位 DP
 tags:
+  - 动态规划
+  - DP
   - 数位动态规划
   - Digit DP
 ---
@@ -32,40 +34,39 @@ tags:
 在问题求解时，一般将 $[l, r]$ 转换为 $[0, r]$ 和 $[0, l-1]$，然后分别求解，最后相减即可。  
 如果 $l-1$ 也不适合（如 $l=0$ 或非常大的数字），则直接求解 $[0, l]$，然后相减并且对 $l$ 进行特殊的 $check$ 处理，判断是否满足条件。
 
-???+ note "模版"
+???+ note "模版（伪代码）"
 
-    ```cpp
-    int64_t digit_dp(const string &s) {
-      int64_t m = s.length();
+    ```text
+    digit_dp(s):
+      m = s.length()
+      memo = 视题目状态而定
 
-      vector<int64_t> memo(m, -1);  // -1 表示没有计算过
+      dfs(i, is_limit, is_num, 其他状态):
+        if i == m:
+          return is_num ? 1 : 0
+        if !is_limit && is_num && 当前状态已被记忆化:
+          return memo[当前状态]
 
-      using dfs_type = function<int64_t(int64_t, bool, bool)>;
-      dfs_type dfs   = [&](int64_t i, bool is_limit, bool is_num, ...) -> int64_t {
-        if (i == m) { return is_num; }  // is_num 为 true 表示得到了一个合法数字
-        if (!is_limit && is_num && memo[i] != -1) { return memo[i]; }
-        int64_t res = 0;
-        // 可以跳过当前数位
-        if (!is_num) { res = dfs(i + 1, false, false); }
+        res = 0
+        if !is_num:
+          res += dfs(i + 1, false, false, 更新后的其他状态)
 
-        int64_t up = is_limit ? s[i] - '0' : 9;  // 当前位可填的最大数字
-        for (int64_t d = 1 - is_num; d <= up; ++d) {  // 枚举要填入的数字 d
-          // if 中填限制条件
-          if (true) { res = res + dfs(i + 1, is_limit && d == up, true); }
-        }
-        if (!is_limit && is_num) { memo[i] = res; }
-        return res;
-      };
-      // 开始时要约束，所以is_limit为true
-      return dfs(0, true, false);
-    }
+        up = is_limit ? s[i] - '0' : 9
+        for d in [1 - is_num, up]:
+          if 满足题目限制:
+            res += dfs(i + 1, is_limit && d == up, true, 更新后的其他状态)
 
-    int64_t solve(int64_t low, int64_t high) {
-      string low_str  = to_string(low - 1);
-      string high_str = to_string(high);
-      return digit_dp(high_str) - digit_dp(low_str);
-    }
+        if !is_limit && is_num:
+          memo[当前状态] = res
+        return res
+
+      return dfs(0, true, false, 初始状态)
+
+    solve(low, high):
+      return digit_dp(high) - digit_dp(low - 1)
     ```
+
+    当 `low = 0` 或题目使用大整数区间时，不能直接套 `low - 1`，需要单独处理左端点。
 
 ??? note "[数字计数](https://www.luogu.com.cn/problem/P2602){target=_blank}"
 

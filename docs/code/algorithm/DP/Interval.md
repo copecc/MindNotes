@@ -1,6 +1,8 @@
 ---
 title: 区间 DP
 tags:
+  - 动态规划
+  - DP
   - 区间型动态规划
   - Interval DP
 ---

@@ -1,6 +1,8 @@
 ---
 title: 状态压缩 DP
 tags:
+  - 动态规划
+  - DP
   - 状态压缩动态规划
   - State Compression DP
 ---

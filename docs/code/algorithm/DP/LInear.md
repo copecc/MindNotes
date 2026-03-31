@@ -1,10 +1,10 @@
 ---
 title: 线性 DP
 tags:
+  - 动态规划
+  - DP
+  - 线性动态规划
   - Linear DP
-  - Max Sequence Sum
-  - Longest Increasing Subsequence
-  - LIS
 ---
 
 # 线性动态规划
@@ -178,7 +178,7 @@ tags:
     }
     ```
 
-??? note "输出字典序最小的最长递增子序列"
+??? note "输出一个最长递增子序列"
 
     ```cpp
     vector<int> getLIS(vector<int> &nums) {
@@ -201,6 +201,6 @@ tags:
       for (int i = indices[size - 1], j = size - 1; i >= 0; i = predecessors[i], --j) {
         lis[j] = nums[i];
       }
-      return size;  // 返回最长递增子序列长度, lis数组即为最长递增子序列本身
+      return lis;
     }
     ```
