@@ -6,7 +6,8 @@ tags:
   - 埃拉托斯特尼筛法
   - Sieve of Eratosthenes
   - 欧拉筛法
-  - Sieve of Euler
+  - Euler Sieve
+  - Linear Sieve
   - 质因子
   - Prime Factorization
   - 欧拉函数

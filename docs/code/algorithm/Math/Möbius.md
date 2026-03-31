@@ -200,7 +200,7 @@ $$
             }
             ```
     
-    ??? note "[完全子集的最大元素和](https://leetcode.cn/problems/maximum-element-sum-of-a-complete-subset-of-indices/description/){target='_blank'}"
+    ??? note "[完全子集的最大元素和](https://leetcode.cn/problems/maximum-element-sum-of-a-complete-subset-of-indices/description/){target=_blank}"
 
         给你一个下标从 $1$ 开始、由 $n$ 个整数组成的数组。你需要从 $nums$ 选择一个 完全集，其中每对元素下标的乘积都是一个完全平方数，例如选择 $a_i$ 和 $a_j$ ，$i * j$ 一定是完全平方数。
 

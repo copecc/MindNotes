@@ -2,14 +2,14 @@
 title: 卡特兰数
 tags:
   - 卡特兰数
-  - Cattelan Number
+  - Catalan Number
   - 组合数学
   - Combinatorial Mathematics
 ---
 
 # 卡特兰数
 
-卡特兰数（$\text{Cattelan Number}$）是一类在组合数学中出现的数列，常用于计数各种组合结构。  
+卡特兰数（$\text{Catalan Number}$）是一类在组合数学中出现的数列，常用于计数各种组合结构。  
 
 ## 卡特兰数计算公式
 
@@ -41,7 +41,7 @@ tags:
         #include <vector>
         using namespace std;
 
-        int64_t Cattelan(int64_t n, int64_t mod) {
+        int64_t Catalan(int64_t n, int64_t mod) {
           auto pow = [](int64_t a, int64_t b, int64_t mod) -> int64_t {
             int64_t res = 1 % mod;
             a           = a % mod;
@@ -97,7 +97,7 @@ tags:
         #include <vector>
         using namespace std;
 
-        int64_t Cattelan(int64_t n, int64_t mod) {
+        int64_t Catalan(int64_t n, int64_t mod) {
           vector<int64_t> catalan(n + 1, 0);
           catalan[0] = 1;
           // 公式4: C_n = sum(C_i * C_(n-1-i)), i=0..n-1
@@ -117,7 +117,7 @@ tags:
         #include <vector>
         using namespace std;
 
-        int64_t Cattelan(int64_t n, int64_t mod) {
+        int64_t Catalan(int64_t n, int64_t mod) {
           auto pow = [](int64_t a, int64_t b, int64_t mod) -> int64_t {
             int64_t res = 1 % mod;
             a           = a % mod;
@@ -202,7 +202,7 @@ tags:
        不合法路径是指路径经过下半区（即某一步中 $y < x$）。  
        反射法：将不合法路径的第一个进入 $y < x$ 的点 $(k, k+1)$ 开始的部分，沿直线 $y = x + 1$ 对称反射，映射到从 $(0, 0)$ 到 $(n-1, n+1)$ 的路径。这些路径的总数为 $C(2n, n-1)$。  
        所以合法路径数为 $C(2n,n) - C(2n,n-1) = C(2n,n)/(n+1)$。  
-       ![CattelanIllegalPath](image/CattelanIllegalPath.png "反射法示意-非法路径映射")
+       ![CatalanIllegalPath](images/CatalanIllegalPath.png "反射法示意-非法路径映射")
      - 本质也是路径计数的还有:
           1. 不含递增三元组的排列数问题: 求长度为 $n$ 的排列（元素互异）中不含递增三元组的排列数  
           2. $\text{123-avoiding}$ 排列数问题: 求长度为 $n$ 的排列（元素互异）中不含递增子序列 $1,2,3$ 的排列数  

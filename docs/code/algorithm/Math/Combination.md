@@ -17,7 +17,7 @@ tags:
 2. $C(n, k) = C(n-1, k-1) + C(n-1, k)$（递推关系）  
 3. $\sum_{k=0}^{n} C(n, k) = 2^n$（二项式定理）  
 4. $C(n, k) = \frac{n}{k} \cdot C(n-1, k-1)$（分子分母同乘法）  
-5. $\sum_{i=0}^{k} C(n, i) = C(n+1, k+1)$（组合数求和）
+5. $\sum_{i=k}^{n} C(i, k) = C(n+1, k+1)$（冰球杆恒等式）
 6. $\sum_{k=0}^{n} C(n, k) * C(m, r-k) = C(n+m, r)$（组合数卷积）
 
 
@@ -161,7 +161,7 @@ tags:
 二项式定理（$\text{Binomial Theorem}$）描述了二项式 $(x + y)^n$ 的展开形式。  
 根据二项式定理，有：$(x + y)^n = \sum_{k=0}^{n} C(n, k) \cdot x^k \cdot y^{n-k}$。  
 
-???+ node "二项式定理展开"
+???+ note "二项式定理展开"
     返回 $(x + y)^n$ 展开后各项的系数。
 
     ```cpp
@@ -212,7 +212,7 @@ tags:
     }
     ```
 
-??? node "[计算系数](https://www.luogu.com.cn/problem/P1313){target=_blank}"
+??? note "[计算系数](https://www.luogu.com.cn/problem/P1313){target=_blank}"
     求解 $(ax + by)^{k}$ 展开后 $x^n y^m$ 的系数。
 
     ```cpp
@@ -272,7 +272,7 @@ tags:
 解决要求恰好 $k$ 个的问题, 可以转化为钦定 $k$ 个且至少的问题, 然后通过形式 $2$ 反演求解。  
 
 
-??? node "[信封问题](https://www.luogu.com.cn/problem/P1595){target=_blank}"
+??? note "[信封问题](https://www.luogu.com.cn/problem/P1595){target=_blank}"
     给定 $n$ 个信封和 $n$ 封信，问有多少种方法可以将信放入信封，使得没有任何一封信放入与其对应的信封中。
 
     === "递推公式"
