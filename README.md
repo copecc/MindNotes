@@ -11,5 +11,5 @@
 
 ## 📖 在线文档
 
-访问博客文档：  
-[https://copecc.github.io/MindNotes/](https://copecc.github.io/MindNotes/){target="_blank"}
+<a href="https://copecc.github.io/MindNotes/" target="_blank">访问博客文档 🔗</a>
+

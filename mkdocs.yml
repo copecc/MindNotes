@@ -69,7 +69,7 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets:
       base_path:
-        - docs/snippets
+        - snippets
       check_paths: true
       encoding: utf-8
   # Content tabs
