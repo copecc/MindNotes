@@ -1,8 +1,10 @@
 ---
 title: 前缀和与差分
 tags:
-  - prefix
-  - difference
+  - 前缀和
+  - Prefix Sum
+  - 差分
+  - Difference
 ---
 
 # 前缀和与差分

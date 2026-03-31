@@ -3,7 +3,8 @@ title: 位运算与集合
 tags:
   - 位运算
   - 集合
-  - bitset
+  - Bit Manipulation
+  - Bitmask
 ---
 
 # 位运算与集合
@@ -37,9 +38,9 @@ tags:
       int n;
 
      public:
-      explicit BitSetManipulation(unsigned n_) : n(n_) {}
+      explicit BitSetManipulation(unsigned n_) : U(0), n(n_) {}
 
-      unsigned Universal() const { return (1 << n) - 1; }
+      unsigned Universal() const { return (1U << n) - 1; }
 
       // 集合运算
       void Intersection(unsigned V) { U = U & V; }
@@ -62,14 +63,14 @@ tags:
       int Minimum() const { return __builtin_ctz(U); }
 
       // 元素运算
-      unsigned ComplementarySet() const { return ~U; }
+      unsigned ComplementarySet() const { return Universal() ^ U; }
 
       // 元素i是否在集合中
       bool BelongTo(unsigned i) const { return ((U >> i) & 1) == 1; }
 
-      void Add(unsigned i) { U = U | (1 << i); }
+      void Add(unsigned i) { U = U | (1U << i); }
 
-      void Delete(unsigned i) { U = U & (~(1 << i)); }
+      void Delete(unsigned i) { U = U & (~(1U << i)); }
 
       void DeleteMinimum() { U = U & (U - 1); }
 

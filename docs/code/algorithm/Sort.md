@@ -2,7 +2,7 @@
 title: 排序算法
 tags:
   - 排序
-  - sort
+  - Sort
   - 基数排序
   - Radix Sort
 ---

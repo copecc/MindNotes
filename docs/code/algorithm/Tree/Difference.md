@@ -22,7 +22,7 @@ tags:
       - 在 $u$ 和 $v$ 上加上修改值
       - 在 $\text{LCA}$ 上减去修改值
       - 如果 $\text{LCA}$ 不是根节点，那么在 $\text{LCA}$ 的父节点上也减去修改值
-3. 最后对树进行一次 $\text{DFS}$, 将差分值进行累加, 即可得到每个节点的最终值
+3. 最后对树进行一次 $\text{DFS}$, 将差分值进行累加, 即可得到每个节点被路径覆盖后的最终点权
 
 
 ???+ note "[Max Flow P](https://www.luogu.com.cn/problem/P3128){target=_blank}"

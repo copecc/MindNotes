@@ -9,7 +9,7 @@ tags:
 
 对于一个连通图 $G$，如果其点数与边数相等，称它为一个基环树（$\text{Pseudotree}$）。也就是说，基环树是一个包含恰好一个环的连通图。
 
-??? note "[发现环](https://www.luogu.com.cn/problem/P8655){target='_blank'}"
+??? note "[发现环](https://www.luogu.com.cn/problem/P8655){target=_blank}"
 
     给定一个包含 $n$ 个点和 $n$ 条边的无向图，图中恰有一个环。请你找出环上的所有点。
 
@@ -26,11 +26,13 @@ tags:
 
 基环内向树（$\text{Inward Pseudotree}$）：有向弱连通图每个点的出度都为 $1$。
 
-常常将内向基环树与拓扑排序结合使用，以求出每个点距离环的距离。对于环上的点，距离定义为环的大小；对于树枝上的点，距离定义为其到环上最近点的距离。
+常常将内向基环树与拓扑排序结合使用，以求出每个点到环的距离。对于环上的点，到环的距离定义为 $0$；对于树枝上的点，到环的距离定义为其到环上最近点的距离。
+
+在一些具体题目中，还会额外把环的大小作为环上节点的初始值，再向树枝部分做转移统计；这属于题目特定定义，不是“到环距离”的通用定义。
 
 环上的点与树枝上的点可以通过统计入度来区分。环上的点入度至少为 $1$，而树枝上的点入度为 $0$。通过拓扑排序可以将所有树枝上的点剔除，剩下的即为环上的点。随后可以通过 BFS 从环上点开始，向树枝上扩展，计算每个点距离环的距离。
 
-???+ note "[参加会议的最多员工数](https://leetcode.cn/problems/maximum-employees-to-be-invited-to-a-meeting/description/){target='_blank'}"
+???+ note "[参加会议的最多员工数](https://leetcode.cn/problems/maximum-employees-to-be-invited-to-a-meeting/description/){target=_blank}"
 
     一个公司准备组织一场会议，邀请名单上有 $n$ 位员工。公司准备了一张圆形的桌子，可以坐下任意数目的员工。
 

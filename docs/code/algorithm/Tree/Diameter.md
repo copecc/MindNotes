@@ -15,7 +15,7 @@ tags:
 2. 树上任意一点，相隔最远的点的集合，直径的两端点至少有一个在其中
 
 
-???+ "[【模板】树的直径](https://www.luogu.com.cn/problem/U81904){target=_blank}"
+???+ note "[【模板】树的直径](https://www.luogu.com.cn/problem/U81904){target=_blank}"
     
     === "两次 $\text{DFS}$"
 
@@ -65,7 +65,7 @@ tags:
 
 如果树的边权都为正数，可以通过两次 $\text{DFS}$ 找到一条直径，然后从直径的两个端点同时向中间移动，直到相遇，所经过的路径即为所有直径的公共部分。
 
-???+ "[直径](https://www.luogu.com.cn/problem/P3304){target=_blank}"
+???+ note "[直径](https://www.luogu.com.cn/problem/P3304){target=_blank}"
 
     对于给定的一棵树，边权为正整数，其直径的长度是多少，以及有多少条边满足所有的直径都经过该边。
 
