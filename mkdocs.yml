@@ -151,6 +151,7 @@ extra_javascript:
   # MathJax JavaScript
   - javascripts/mathjax.js
   - javascripts/auto-dir-index.js
+  - javascripts/homepage-carousel.js
   # - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js # v3
   - https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js
   # KaTeX JavaScript

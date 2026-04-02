@@ -1,0 +1,32 @@
+sections:
+  - key: blog
+    title: 博客
+    eyebrow: Blog
+    description: 记录技术随笔、阶段性总结与零散但值得保留的想法。
+    url: blog/
+    order: 1
+    enabled: true
+
+  - key: code
+    title: 代码与算法
+    eyebrow: Code
+    description: 整理算法题解、数据结构、技巧性专题与实验性代码内容。
+    url: code/
+    order: 2
+    enabled: true
+
+  - key: learning
+    title: 学习笔记
+    eyebrow: Learning
+    description: 按主题归档系统、网络、CUDA、数据库、AI 等长期学习内容。
+    url: learning/
+    order: 3
+    enabled: true
+
+  - key: interview
+    title: 面试整理
+    eyebrow: Interview
+    description: 沉淀高频问题、项目表达与不同方向的结构化复盘。
+    url: interview/
+    order: 4
+    enabled: true
