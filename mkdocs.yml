@@ -119,6 +119,8 @@ plugins:
   - awesome-nav
   - search
   - blog
+  - macros:
+      include_dir: overrides/partials
   - group: # Conditional plugins
       enabled: !ENV CI
       plugins:
@@ -131,8 +133,6 @@ plugins:
             cache_safe: true
         - git-revision-date-localized:
             enable_creation_date: true
-        - macros:
-            include_dir: overrides/partials
         - toggle-sidebar:
             toggle_button: all
         - glightbox:
@@ -150,6 +150,7 @@ plugins:
 extra_javascript:
   # MathJax JavaScript
   - javascripts/mathjax.js
+  - javascripts/auto-dir-index.js
   # - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js # v3
   - https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js
   # KaTeX JavaScript

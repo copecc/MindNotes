@@ -1,0 +1,86 @@
+{% include "partials/tags.html" %}
+{% include "partials/actions.html" %}
+{% if "<h1" not in page.content %}
+  <h1>{{ page.title | d(config.site_name, true)}}</h1>
+{% endif %}
+{% set injected_blocks = namespace(value="") %}
+{% if page.meta and page.meta.show_question_index and page.toc and page.toc.items %}
+  {% set question_index_title = page.meta.question_index_title | default("问题索引") %}
+  {% set question_index_collapsed = page.meta.question_index_collapsed | default(true) %}
+  {% set question_index_style = page.meta.question_index_style | default("abstract") %}
+  {% set raw_levels = page.meta.question_index_levels | default(page.meta.question_index_level | default([2])) %}
+  {% if raw_levels is string %}
+    {% set question_index_levels = raw_levels.split(",") | map("trim") | map("int") | list %}
+  {% elif raw_levels is number %}
+    {% set question_index_levels = [raw_levels | int] %}
+  {% else %}
+    {% set question_index_levels = raw_levels | map("int") | list %}
+  {% endif %}
+  {% set toc_items = namespace(value=page.toc.items) %}
+  {% if toc_items.value and toc_items.value[0].level == 1 %}
+    {% set toc_items.value = toc_items.value[0].children %}
+  {% endif %}
+{% endif %}
+{% if page.meta and page.meta.show_question_index and toc_items.value %}
+  {% set question_index_markup %}
+    <details class="{{ question_index_style }} question-index"{% if not question_index_collapsed %} open{% endif %}>
+      <summary>{{ question_index_title }}</summary>
+      <ol class="question-index__list">
+        {% for item in toc_items.value recursive %}
+          {% if item.level in question_index_levels %}
+            <li class="question-index__item question-index__item--level-{{ item.level }}">
+              <a href="{{ item.url }}">{{ item.title }}</a>
+              {% if item.children %}
+                <ol class="question-index__list">
+                  {{ loop(item.children) }}
+                </ol>
+              {% endif %}
+            </li>
+          {% elif item.children %}
+            {{ loop(item.children) }}
+          {% endif %}
+        {% endfor %}
+      </ol>
+    </details>
+  {% endset %}
+  {% set injected_blocks.value = injected_blocks.value ~ question_index_markup %}
+{% endif %}
+{% if page.meta and page.meta.show_directory_index %}
+  {% set directory_index_title = page.meta.directory_index_title | default("目录") %}
+  {% set directory_index_recursive = page.meta.directory_index_recursive | default(false) %}
+  {% set directory_index_group_by = page.meta.directory_index_group_by | default("") %}
+  {% set raw_levels = page.meta.directory_index_levels | default(page.meta.directory_index_level | default([2])) %}
+  {% if raw_levels is string %}
+    {% set directory_index_levels = raw_levels.split(",") | map("trim") | join(",") %}
+  {% elif raw_levels is number %}
+    {% set directory_index_levels = raw_levels | int %}
+  {% else %}
+    {% set directory_index_levels = raw_levels | join(",") %}
+  {% endif %}
+  {% set directory_index_markup %}
+    <section class="directory-question-index-block">
+      <h2>{{ directory_index_title }}</h2>
+      <div
+        class="directory-question-index"
+        data-auto-dir-index
+        data-level="{{ directory_index_levels }}"
+        data-recursive="{{ 'true' if directory_index_recursive else 'false' }}"
+        data-group-by="{{ directory_index_group_by }}"
+      ></div>
+    </section>
+  {% endset %}
+  {% set injected_blocks.value = injected_blocks.value ~ directory_index_markup %}
+{% endif %}
+{% if injected_blocks.value %}
+  {% if "<h1" in page.content %}
+    {{ page.content | replace("</h1>", "</h1>" ~ injected_blocks.value, 1) }}
+  {% else %}
+    {{ injected_blocks.value }}
+    {{ page.content }}
+  {% endif %}
+{% else %}
+  {{ page.content }}
+{% endif %}
+{% include "partials/source-file.html" %}
+{% include "partials/feedback.html" %}
+{% include "partials/comments.html" %}

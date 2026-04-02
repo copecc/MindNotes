@@ -233,3 +233,59 @@ https://github.com/ostueker/mkdocs-example-lesson/blob/main/acenet_theme/assets/
   -webkit-mask-image: var(--md-admonition-icon--hint);
   mask-image: var(--md-admonition-icon--hint);
 }
+
+.md-typeset .directory-question-index__section + .directory-question-index__section {
+  margin-top: 1.2rem;
+}
+
+.md-typeset .directory-question-index__group + .directory-question-index__group {
+  margin-top: 1.5rem;
+}
+
+.md-typeset .directory-question-index__group-heading {
+  margin: 0 0 0.55rem;
+  font-size: 1.05rem;
+}
+
+.md-typeset .directory-question-index__group-heading a {
+  color: var(--md-default-fg-color);
+  text-decoration: none;
+}
+
+.md-typeset .directory-question-index__group-heading a:hover {
+  color: var(--md-primary-fg-color);
+}
+
+.md-typeset .directory-question-index__group .directory-question-index__section {
+  margin-left: 0.3rem;
+  padding-left: 0.7rem;
+  border-left: 0.08rem solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset .directory-question-index__heading {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+}
+
+.md-typeset .directory-question-index__heading a {
+  color: var(--md-default-fg-color);
+  text-decoration: none;
+}
+
+.md-typeset .directory-question-index__heading a:hover {
+  color: var(--md-primary-fg-color);
+}
+
+.md-typeset .directory-question-index__list {
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.md-typeset .directory-question-index__list--nested {
+  margin-top: 0.22rem;
+  padding-left: 0.95rem;
+}
+
+.md-typeset .directory-question-index__list li {
+  margin: 0.18rem 0;
+}
