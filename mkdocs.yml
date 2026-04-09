@@ -51,6 +51,8 @@ theme:
     - content.action.view
 
 markdown_extensions:
+  # Abbreviations
+  - abbr
   # Admonitions
   - admonition
   - pymdownx.details

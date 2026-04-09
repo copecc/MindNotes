@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="288" height="304" viewBox="0 0 288 304" data-drawio="PG14R3JhcGhNb2RlbCBkeD0iMTEyMCIgZHk9IjcyMCIgZ3JpZD0iMSIgZ3JpZFNpemU9IjgiIGd1aWRlcz0iMSIgdG9vbHRpcHM9IjEiIGNvbm5lY3Q9IjEiIGFycm93cz0iMSIgZm9sZD0iMSIgcGFnZT0iMSIgcGFnZVNjYWxlPSIxIiBwYWdlV2lkdGg9IjI4OCIgcGFnZUhlaWdodD0iMzA0IiBtYXRoPSIxIiBiYWNrZ3JvdW5kPSIjRkZGRkZGIj48cm9vdD48bXhDZWxsIGlkPSIwIi8+PG14Q2VsbCBpZD0iMSIgcGFyZW50PSIwIi8+PG14Q2VsbCBpZD0iMiIgdmFsdWU9Ikhhc2ggUmluZyAwIH4gMsKzwrItMSIgc3R5bGU9InJvdW5kZWQ9MTthcmNTaXplPTIwO2h0bWw9MTt3aGl0ZVNwYWNlPXdyYXA7ZmlsbENvbG9yPSNEQkVBRkU7c3Ryb2tlQ29sb3I9IzI1NjNFQjtzdHJva2VXaWR0aD0xLjU7Zm9udENvbG9yPSMxRTI5M0I7Zm9udFNpemU9MTM7Zm9udEZhbWlseT1JbnRlciwgUm9ib3RvLCBzeXN0ZW0tdWksIC1hcHBsZS1zeXN0ZW0sIHNhbnMtc2VyaWY7dmVydGljYWxBbGlnbj1taWRkbGU7YWxpZ249Y2VudGVyIiB2ZXJ0ZXg9IjEiIHBhcmVudD0iMSI+PG14R2VvbWV0cnkgeD0iNjQiIHk9IjEwNCIgd2lkdGg9IjEyMCIgaGVpZ2h0PSI2MCIgYXM9Imdlb21ldHJ5Ii8+PC9teENlbGw+PC9yb290PjwvbXhHcmFwaE1vZGVsPg==">
+<defs>
+<marker id="arrow-block" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+  <path d="M 0 0 L 10 5 L 0 10 Z" fill="currentColor"/>
+</marker>
+<marker id="arrow-open" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+  <path d="M 0 0 L 10 5 L 0 10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+</marker>
+<marker id="arrow-classic" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+  <path d="M 0 0 L 10 5 L 0 10 L 3 5 Z" fill="currentColor"/>
+</marker>
+<marker id="arrow-diamond" viewBox="0 0 12 12" refX="12" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+  <path d="M 0 6 L 6 0 L 12 6 L 6 12 Z" fill="currentColor"/>
+</marker>
+</defs>
+<rect width="100%" height="100%" fill="#FFFFFF"/>
+<rect x="64" y="104" width="120" height="60" rx="20" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5"/>
+<text x="124" y="134" text-anchor="middle" dominant-baseline="central" font-family="Inter, Roboto, system-ui, -apple-system, sans-serif" font-size="13" fill="#1E293B">Hash Ring 0 ~ 2³²-1</text>
+</svg>

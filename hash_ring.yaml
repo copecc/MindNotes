@@ -1,0 +1,6 @@
+nodes:
+  - id: ring
+    label: "Hash Ring 0 ~ 2³²-1"
+    shape: ellipse
+    width: 300
+    height: 300
