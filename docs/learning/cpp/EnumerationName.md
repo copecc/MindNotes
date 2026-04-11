@@ -15,14 +15,14 @@ tags:
 
 在常规的工程实践中，为了获取枚举类中值的名称或通过字符串名称定位到对应的枚举值，最直观的解决方案是维护一个映射容器（如 `std::map<int, std::string>`），或者依赖底层值的索引与名称的对应关系。
 
-例如，通过维护一个 `std::vector<QString>` 来实现对枚举值和索引下标的双向转换：
+例如，通过维护一个 `std::vector<std::string>` 来实现对枚举值和索引下标的双向转换：
 
 ??? note "传统枚举转换"
 
     ```cpp title="enum_map.cpp"
     enum class Buff { AOE, RAGE, FROZE, BLEED, TRACK, STAR, FLASH, QUICK };
 
-    std::vector<QString> buff2string = {"AOE", "RAGE", "FROZE", "BLEED", "TRACK", "STAR", "FLASH", "QUICK"};
+    std::vector<std::string> buff2string = {"AOE", "RAGE", "FROZE", "BLEED", "TRACK", "STAR", "FLASH", "QUICK"};
 
     // 将字符串名称转换为对应的枚举值
     auto buff = static_cast<Buff>(std::find(buff2string.begin(), buff2string.end(), target_string) - buff2string.begin());
@@ -69,9 +69,17 @@ tags:
 
 获得完整的展开字符串后，需要对其进行切分以获取关键信息。以 `with T = Color; T V = Color::red` 为例，具体的提取规则如下：
 
+
+
 - 第一个 `=` 和 `;` 之间的内容是枚举类型的全名，本例中为 `Color`。
+
+
 - 第二个 `=` 和 `]` 之间的内容是枚举值的全称，本例中为 `Color::red`。
+
+
 - 最后一个 `:` 和 `]` 之间的内容是枚举值的短名称，本例中为 `red`（适用于 `scoped enum`）。
+
+
 - 对于传统的 C++ 枚举（即未增加 `class` 关键字），全称和短名称是相同的，提取时即可依据是否存在冒号 `::` 来判定是否为作用域枚举（Scoped Enum）。
 
 ### 编译期数据结构设计
@@ -129,6 +137,10 @@ tags:
 
 ## 参考资料
 
+
+
 - [静态反射C++枚举名字的超简方案——C++闲得慌系列之（一）](https://zhuanlan.zhihu.com/p/419673631)
+
+
 - [C/C++如何用最简洁的方式同时声明枚举和对应的字符串列表？](https://www.zhihu.com/question/482502037)
 
