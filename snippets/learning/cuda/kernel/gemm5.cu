@@ -6,86 +6,96 @@ __global__ void coarse2D_kernel(float *A, float *B, float *C, int M, int N, int 
   static_assert(num_threads % TILE_A_COLS == 0);
   static_assert(num_threads % TILE_B_COLS == 0);
 
-  const int block_x  = blockIdx.x;
-  const int block_y  = blockIdx.y;
-  const int thread_x = threadIdx.x;
+  const int block_col = blockIdx.x;
+  const int block_row = blockIdx.y;
+  const int thread_id = threadIdx.x;
 
-  // Linear threads are remapped so each thread helps load tiles and then computes a COARSE_Y x
-  // COARSE_X output patch.
-  const int A_view_y  = thread_x / TILE_A_COLS;
-  const int A_view_x  = thread_x % TILE_A_COLS;
-  const int B_view_y  = thread_x / TILE_B_COLS;
-  const int B_view_x  = thread_x % TILE_B_COLS;
-  const int stride_A  = num_threads / TILE_A_COLS;
-  const int stride_B  = num_threads / TILE_B_COLS;
+  // One block computes the C tile
+  // C[block_row*TILE_A_ROWS:(block_row+1)*TILE_A_ROWS,
+  //   block_col*TILE_B_COLS:(block_col+1)*TILE_B_COLS].
 
-  const int row       = COARSE_Y * (thread_x / (TILE_B_COLS / COARSE_X));
-  const int col       = COARSE_X * (thread_x % (TILE_B_COLS / COARSE_X));
+  // Load coordinates contributed by this thread for the current shared-memory tiles.
+  const int a_load_row = thread_id / TILE_A_COLS;
+  const int a_load_k   = thread_id % TILE_A_COLS;
+  const int b_load_k   = thread_id / TILE_B_COLS;
+  const int b_load_col = thread_id % TILE_B_COLS;
+  const int a_load_row_stride = num_threads / TILE_A_COLS;
+  const int b_load_k_stride   = num_threads / TILE_B_COLS;
+
+  // This thread accumulates a COARSE_Y x COARSE_X patch whose top-left corner is
+  // (c_row_in_tile, c_col_in_tile) inside the block tile.
+  const int c_row_in_tile = COARSE_Y * (thread_id / (TILE_B_COLS / COARSE_X));
+  const int c_col_in_tile = COARSE_X * (thread_id % (TILE_B_COLS / COARSE_X));
   const int num_tiles = (K + TILE_A_COLS - 1) / TILE_A_COLS;
 
-  // Shared tiles cover A[block_y*TILE_A_ROWS:(block_y+1)*TILE_A_ROWS,
-  // tile*TILE_A_COLS:(tile+1)*TILE_A_COLS] and B[tile*TILE_A_COLS:(tile+1)*TILE_A_COLS,
-  // block_x*TILE_B_COLS:(block_x+1)*TILE_B_COLS].
+  // For each tile in K:
+  // sh_A[row_in_tile][k_in_tile] <- A[block_row tile, current K tile]
+  // sh_B[k_in_tile][col_in_tile] <- B[current K tile, block_col tile]
   __shared__ float sh_A[TILE_A_ROWS][TILE_A_COLS];
   __shared__ float sh_B[TILE_A_COLS][TILE_B_COLS];
 
-  float value[COARSE_Y][COARSE_X] = {0.0f};
-  float reg_A[COARSE_Y]           = {0.0f};
-  float reg_B[COARSE_X]           = {0.0f};
+  float accum[COARSE_Y][COARSE_X] = {0.0f};
+  float a_frag[COARSE_Y]          = {0.0f};
+  float b_frag[COARSE_X]          = {0.0f};
 
   for (int tile = 0; tile < num_tiles; ++tile) {
-    for (int load_offset = 0; load_offset < TILE_A_ROWS; load_offset += stride_A) {
-      if (block_y * TILE_A_ROWS + load_offset + A_view_y < M && tile * TILE_A_COLS + A_view_x < K) {
-        sh_A[load_offset + A_view_y][A_view_x]
-            = A[(block_y * TILE_A_ROWS + load_offset + A_view_y) * K + tile * TILE_A_COLS
-                + A_view_x];
+    // Fill sh_A for the current K tile.
+    // Each thread visits row_in_tile = a_row_base + a_load_row, k_in_tile = a_load_k.
+    // global A[block_row*TILE_A_ROWS + row_in_tile, tile*TILE_A_COLS + k_in_tile]
+    //   -> sh_A[row_in_tile][k_in_tile].
+    for (int a_row_base = 0; a_row_base < TILE_A_ROWS; a_row_base += a_load_row_stride) {
+      const int row_in_tile = a_row_base + a_load_row;
+      if (block_row * TILE_A_ROWS + row_in_tile < M && tile * TILE_A_COLS + a_load_k < K) {
+        sh_A[row_in_tile][a_load_k]
+            = A[(block_row * TILE_A_ROWS + row_in_tile) * K + tile * TILE_A_COLS + a_load_k];
       } else {
-        sh_A[load_offset + A_view_y][A_view_x] = 0.0f;
+        sh_A[row_in_tile][a_load_k] = 0.0f;
       }
     }
 
-    for (int load_offset = 0; load_offset < TILE_A_COLS; load_offset += stride_B) {
-      if (tile * TILE_A_COLS + load_offset + B_view_y < K && block_x * TILE_B_COLS + B_view_x < N) {
-        sh_B[load_offset + B_view_y][B_view_x] = B[(tile * TILE_A_COLS + B_view_y + load_offset) * N
-                                                   + block_x * TILE_B_COLS + B_view_x];
+    // Fill sh_B for the current K tile.
+    // Each thread visits k_in_tile = b_k_base + b_load_k, col_in_tile = b_load_col.
+    // global B[tile*TILE_A_COLS + k_in_tile, block_col*TILE_B_COLS + col_in_tile]
+    //   -> sh_B[k_in_tile][col_in_tile].
+    for (int b_k_base = 0; b_k_base < TILE_A_COLS; b_k_base += b_load_k_stride) {
+      const int k_in_tile = b_k_base + b_load_k;
+      if (tile * TILE_A_COLS + k_in_tile < K && block_col * TILE_B_COLS + b_load_col < N) {
+        sh_B[k_in_tile][b_load_col]
+            = B[(tile * TILE_A_COLS + k_in_tile) * N + block_col * TILE_B_COLS + b_load_col];
       } else {
-        sh_B[load_offset + B_view_y][B_view_x] = 0.0f;
+        sh_B[k_in_tile][b_load_col] = 0.0f;
       }
     }
     __syncthreads();
 
-    // Register tiling increases arithmetic intensity: each loaded A/B value is reused across
-    // multiple outputs.
+    // Shared-memory values are promoted to registers and reused across the thread's output patch.
     for (int k_tile = 0; k_tile < TILE_A_COLS; ++k_tile) {
-      for (int i = 0; i < COARSE_Y; ++i) { reg_A[i] = sh_A[row + i][k_tile]; }
-      for (int i = 0; i < COARSE_X; ++i) { reg_B[i] = sh_B[k_tile][col + i]; }
+      for (int i = 0; i < COARSE_Y; ++i) { a_frag[i] = sh_A[c_row_in_tile + i][k_tile]; }
+      for (int i = 0; i < COARSE_X; ++i) { b_frag[i] = sh_B[k_tile][c_col_in_tile + i]; }
 
       for (int row_offset = 0; row_offset < COARSE_Y; ++row_offset) {
         for (int col_offset = 0; col_offset < COARSE_X; ++col_offset) {
-          value[row_offset][col_offset] += reg_A[row_offset] * reg_B[col_offset];
+          accum[row_offset][col_offset] += a_frag[row_offset] * b_frag[col_offset];
         }
       }
     }
     __syncthreads();
   }
 
-  // Each thread writes back its COARSE_Y x COARSE_X patch into
-  // C[block_y*TILE_A_ROWS+row:block_y*TILE_A_ROWS+row+COARSE_Y,
-  //   block_x*TILE_B_COLS+col:block_x*TILE_B_COLS+col+COARSE_X].
+  // Write back the thread-local COARSE_Y x COARSE_X patch.
   for (int row_offset = 0; row_offset < COARSE_Y; ++row_offset) {
     for (int col_offset = 0; col_offset < COARSE_X; ++col_offset) {
-      if (block_y * TILE_A_ROWS + row + row_offset < M
-          && block_x * TILE_B_COLS + col + col_offset < N) {
-        C[(block_y * TILE_A_ROWS + row + row_offset) * N + block_x * TILE_B_COLS + col + col_offset]
-            = value[row_offset][col_offset];
+      if (block_row * TILE_A_ROWS + c_row_in_tile + row_offset < M
+          && block_col * TILE_B_COLS + c_col_in_tile + col_offset < N) {
+        C[(block_row * TILE_A_ROWS + c_row_in_tile + row_offset) * N + block_col * TILE_B_COLS
+          + c_col_in_tile + col_offset] = accum[row_offset][col_offset];
       }
     }
   }
 }
 
 void gemm5(float *A, float *B, float *C, int M, int N, int K) {
-  // Original parameters : COARSE_X=8, COARSE_Y=8, TILE_A_ROWS=128, TILE_A_COLS=16,
-  // TILE_B_COLS=128.
+  // Original parameters : COARSE_X=8, COARSE_Y=8, TILE_A_ROWS=128, TILE_A_COLS=16, TILE_B_COLS=128.
   // Optimized parameters on RTX 6000 Ada GPU:
   constexpr int COARSE_X = 4, COARSE_Y = 8, TILE_A_ROWS = 64, TILE_A_COLS = 16, TILE_B_COLS = 128;
 

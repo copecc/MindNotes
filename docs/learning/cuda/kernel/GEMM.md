@@ -117,6 +117,14 @@ CUDA 需要同一个 warp 内部的线程合并访问一段连续的对齐的全
     --8<-- "learning/cuda/kernel/gemm3.cu"
     ```
 
+这里建议先按三个层次阅读注释：
+
+- `block_row/block_col` 表示当前 Block 负责的输出分块位置。
+- `thread_row/thread_col` 或 `a_load_*`、`b_load_*` 表示当前线程在本轮加载中负责的局部坐标。
+- `c_row`、`c_col` 或 `c_row_in_tile`、`c_col_in_tile` 表示当前线程最终负责写回的输出位置。
+
+后续的一维寄存器分块、二维寄存器分块与向量化版本都沿用这套命名方式，只是每个线程负责的输出区域从单个元素逐步扩展为一条竖向条带或一个二维子块。
+
 ???+ note "同步屏障"
 
     每加载一个 Tile 完成后，需要调用 `__syncthreads()` 防止读取发生脏数据覆盖。
@@ -140,27 +148,27 @@ CUDA 需要同一个 warp 内部的线程合并访问一段连续的对齐的全
 
 为了理解线程映射，首先明确线程块（Thread Block）的规模。以分块大小 $64 \times 64$、`COARSE_FACTOR=8` 为例，分块 $A$ ($64 \times 8 = 512$ 个元素) 与分块 $B$ ($8 \times 64 = 512$ 个元素) 决定了线程块需包含 512 个线程（一维索引 `threadIdx.x` 范围 $0 \sim 511$）。
 
-**1. 负责数据加载的视图坐标（1D $\rightarrow$ 2D）**
+**1. 负责数据加载的局部坐标（1D $\rightarrow$ 2D）**
 
 为了保证从全局内存加载数据时的合并访存，连续的线程 (`threadIdx.x`) 必须访问连续的内存地址（即目标矩阵的列元素）。在 Tiled 块的读取中，`A` 和 `B` 经常展现不同的物理跨度。假设 `A 分块` 维度为 $128 \times 8$，`B 分块` 为 $8 \times 128$，则由于它们所在的矩阵均按行主序 (Row-Major) 存储：
  
 - 读取 `A` 分块时关心的是行向复用（使线程沿着短边的 $8$ 个元素加载，即横向步进小）。
 - 读取 `B` 分块时关心的是列向复用（使同一个 Warp 横向覆盖一整段连续的长边 $128$ 列块）。
 
-具体的逻辑坐标划分公式如下：
+代码里将这组加载坐标直接命名为 `a_load_row`、`a_load_k`、`b_load_k`、`b_load_col`，对应关系如下：
 
-- **矩阵 $A$ 的加载视图**：目标是填充 `TILE_A_ROWS` $\times$ `TILE_A_COLS` 的共享内存。
-
-$$
-A_{view}^{(y)} = \lfloor \frac{\text{threadIdx.x}}{TILE\_A\_COLS} \rfloor, \quad A_{view}^{(x)} = \text{threadIdx.x} \pmod{TILE\_A\_COLS}
-$$
-
-通过对列数求整除与求余，相邻的线程会访问相同的行和相邻的列，确保了对 $A$ 矩阵（按行优先存储）全局内存的连续读取。
-
-- **矩阵 $B$ 的加载视图**：目标是填充 `TILE_A_COLS` $\times$ `TILE_B_COLS` 的共享内存。
+- **矩阵 $A$ 的加载坐标**：目标是填充 `TILE_A_ROWS` $\times$ `TILE_A_COLS` 的共享内存。
 
 $$
-B_{view}^{(y)} = \lfloor \frac{\text{threadIdx.x}}{TILE\_B\_COLS} \rfloor, \quad B_{view}^{(x)} = \text{threadIdx.x} \pmod{TILE\_B\_COLS}
+a_{load\_row} = \lfloor \frac{\text{threadIdx.x}}{TILE\_A\_COLS} \rfloor, \quad a_{load,k} = \text{threadIdx.x} \pmod{TILE\_A\_COLS}
+$$
+
+通过对列数求整除与求余，相邻的线程会访问相同的行和相邻的 K 方向元素，确保对 $A$ 矩阵（按行主序存储）发起连续读取。
+
+- **矩阵 $B$ 的加载坐标**：目标是填充 `TILE_A_COLS` $\times$ `TILE_B_COLS` 的共享内存。
+
+$$
+b_{load\_k} = \lfloor \frac{\text{threadIdx.x}}{TILE\_B\_COLS} \rfloor, \quad b_{load\_col} = \text{threadIdx.x} \pmod{TILE\_B\_COLS}
 $$
 
 同理，每 `TILE_B_COLS` 个连续的线程负责读取 $B$ 矩阵分块中的一整行，完全契合硬件的合并访问要求。
@@ -173,7 +181,7 @@ $$
     根据公式推求，这 $8$ 个连续的线性线程将被自然重塑为以下阵列：
 
     $$
-    A_{view} =
+    A_{load} =
     \begin{bmatrix}
     T_0 & T_1 \\
     T_2 & T_3 \\
@@ -186,7 +194,7 @@ $$
     按照对应的分块列数基准计算，同一批 $8$ 个线程在加载 $B$ 矩阵时，会被重新映射为另一种逻辑形态：
 
     $$
-    B_{view} =
+    B_{load} =
     \begin{bmatrix}
     T_0 & T_1 & T_2 & T_3 \\
     T_4 & T_5 & T_6 & T_7
@@ -199,8 +207,8 @@ $$
 
 在计算阶段，当前线程块需要生成一个 $64 \times 64$ 尺寸的输出矩阵 $C$ 分块（共 $4096$ 个元素）。由 $512$ 个线程分担，每个线程计算同一列上的 $8$ 个连续行元素。
 
-- **列坐标 (`col`)**：连续的线程被分配到连续的列，保证了最终写回矩阵 $C$ 时可以合并访存。
-- **行坐标 (`row`)**：表示 $512$ 个线程在纵向被分成了 $8$ 个线程组。每个线程组负责 $8$ 行，组与组之间的行偏移为 $0, 8, 16, \dots, 56$。
+- **列坐标 (`c_col`)**：连续的线程被分配到连续的列，保证最终写回矩阵 $C$ 时仍能保持合并访存。
+- **起始行坐标 (`c_row0`)**：表示 $512$ 个线程在纵向被分成了 $8$ 个线程组。每个线程组负责 $8$ 行，组与组之间的行偏移为 $0, 8, 16, \dots, 56$。
 
 在内层点积循环中，存放乘加结果的局部数组的相对偏移量恰好与矩阵 $A$ 共享分块的行索引严密对齐。
 
@@ -259,31 +267,31 @@ $$
 Stride_A = \frac{N_{threads}}{TILE\_A\_COLS}, \quad Stride_B = \frac{N_{threads}}{TILE\_B\_COLS}
 $$
 
-- **全局内存加载的视图坐标**：核心要求在于确保连续的计算线程访问连续的数据列地址。一维线程在加载阶段通过如下坐标运算实现对应数据的定位：
+- **全局内存加载的局部坐标**：核心要求在于确保连续的计算线程访问连续的数据列地址。一维线程在加载阶段通过如下坐标运算实现对应数据的定位：
 
 $$
-A_{view}^{(y)} = \lfloor \frac{\text{threadIdx.x}}{TILE\_A\_COLS} \rfloor, \quad A_{view}^{(x)} = \text{threadIdx.x} \pmod{TILE\_A\_COLS}
-$$
-
-$$
-B_{view}^{(y)} = \lfloor \frac{\text{threadIdx.x}}{TILE\_B\_COLS} \rfloor, \quad B_{view}^{(x)} = \text{threadIdx.x} \pmod{TILE\_B\_COLS}
-$$
-
-在加载矩阵 $A$ 时，以计算出的 $A_{view}^{(y)}$ 为基础偏移，线程在循环中每次向下跨越 $Stride_A$ 行，而横坐标 $A_{view}^{(x)}$ 保持不变，始终维持连续横向读取的最优内存合并访问。矩阵 $B$ 的读取同理，利用列方向对齐进行跨越。
-
-- **计算与输出的全局坐标**：在计算阶段，一维线程索引被映射为对应输出子块的二维定位基准：
-
-$$
-row = COARSE\_Y \times \lfloor \frac{\text{threadIdx.x}}{TILE\_B\_COLS / COARSE\_X} \rfloor
+a_{load\_row} = \lfloor \frac{\text{threadIdx.x}}{TILE\_A\_COLS} \rfloor, \quad a_{load\_k} = \text{threadIdx.x} \pmod{TILE\_A\_COLS}
 $$
 
 $$
-col = COARSE\_X \times \left( \text{threadIdx.x} \pmod{TILE\_B\_COLS / COARSE\_X} \right)
+b_{load\_k} = \lfloor \frac{\text{threadIdx.x}}{TILE\_B\_COLS} \rfloor, \quad b_{load\_col} = \text{threadIdx.x} \pmod{TILE\_B\_COLS}
+$$
+
+在加载矩阵 $A$ 时，以计算出的 `a_load_row` 为基础偏移，线程在循环中每次向下跨越 `Stride_A` 行，而 `a_load_k` 保持不变，始终维持连续横向读取的最优内存合并访问。矩阵 $B$ 的读取同理，利用 `b_load_col` 对齐连续列地址，并让 `b_load_k` 沿 K 方向步进。
+
+- **计算与输出的局部坐标**：在计算阶段，一维线程索引被映射为对应输出子块左上角在 Block 内的二维定位基准。代码里对应为 `c_row_in_tile` 与 `c_col_in_tile`：
+
+$$
+c_{row,in\_tile} = COARSE\_Y \times \lfloor \frac{\text{threadIdx.x}}{TILE\_B\_COLS / COARSE\_X} \rfloor
+$$
+
+$$
+c_{col,in\_tile} = COARSE\_X \times \left( \text{threadIdx.x} \pmod{TILE\_B\_COLS / COARSE\_X} \right)
 $$
 
 藉由上述逻辑网格坐标转换，可精确定出该线程负责的输出子矩阵的起始行与列偏移。
 
-- **结果写回至全局内存**：乘加循环结束后，利用所求得的基础定位坐标 (`row`, `col`) 与嵌套循环的二维增量索引，将寄存器数组中缓存的所有运算结果逐一归写至对应全局内存坐标。
+- **结果写回至全局内存**：乘加循环结束后，利用所求得的基础定位坐标 (`c_row_in_tile`, `c_col_in_tile`) 与嵌套循环的二维增量索引，将寄存器数组中缓存的所有运算结果逐一归写至对应全局内存坐标。
 
 ??? example "二维加载步长 (Stride Loading) 示意"
 

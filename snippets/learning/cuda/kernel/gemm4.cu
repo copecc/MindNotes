@@ -2,59 +2,69 @@
 // SGEMM is C = α*(A @ B)+β*C; here α=1, β=0
 template <int COARSE_FACTOR, int TILE_A_ROWS, int TILE_A_COLS, int TILE_B_COLS>
 __global__ void coarse1D_kernel(float *A, float *B, float *C, int M, int N, int K) {
-  const int block_x  = blockIdx.x;
-  const int block_y  = blockIdx.y;
-  const int thread_x = threadIdx.x;
+  const int block_col = blockIdx.x;
+  const int block_row = blockIdx.y;
+  const int thread_id = threadIdx.x;
 
-  // Threads are laid out as a 1D block; each thread loads one A element and one B element into
-  // shared memory.
-  const int A_view_y = thread_x / TILE_A_COLS;
-  const int A_view_x = thread_x % TILE_A_COLS;
-  const int B_view_y = thread_x / TILE_B_COLS;
-  const int B_view_x = thread_x % TILE_B_COLS;
+  // One block computes the C tile of size TILE_A_ROWS x TILE_B_COLS:
+  // C[block_row*TILE_A_ROWS:(block_row+1)*TILE_A_ROWS,
+  //   block_col*TILE_B_COLS:(block_col+1)*TILE_B_COLS].
 
-  // Each thread computes COARSE_FACTOR outputs stacked along rows for the same output column
-  // C[row:row+COARSE_FACTOR, col].
-  const int row       = TILE_A_ROWS * block_y + COARSE_FACTOR * (thread_x / TILE_B_COLS);
-  const int col       = TILE_B_COLS * block_x + (thread_x % TILE_B_COLS);
+  // Load coordinates contributed by this thread for the current shared-memory tiles.
+  const int a_load_row = thread_id / TILE_A_COLS;
+  const int a_load_k   = thread_id % TILE_A_COLS;
+  const int c_row_group = thread_id / TILE_B_COLS;
+  const int thread_col  = thread_id % TILE_B_COLS;
+  const int b_load_k    = c_row_group;
+  const int b_load_col  = thread_col;
+
+  // This thread accumulates one vertical strip
+  // C[c_row0:c_row0+COARSE_FACTOR, c_col].
+  const int c_row0    = TILE_A_ROWS * block_row + COARSE_FACTOR * c_row_group;
+  const int c_col     = TILE_B_COLS * block_col + thread_col;
   const int num_tiles = (K + TILE_A_COLS - 1) / TILE_A_COLS;
 
-  // sh_A caches A[block_y*TILE_A_ROWS:(block_y+1)*TILE_A_ROWS,
-  // tile*TILE_A_COLS:(tile+1)*TILE_A_COLS], sh_B caches B[tile*TILE_A_COLS:(tile+1)*TILE_A_COLS,
-  // block_x*TILE_B_COLS:(block_x+1)*TILE_B_COLS].
+  // For each tile in K:
+  // sh_A[row_in_tile][k_in_tile] <- A[block_row tile, current K tile]
+  // sh_B[k_in_tile][col_in_tile] <- B[current K tile, block_col tile]
   __shared__ float sh_A[TILE_A_ROWS][TILE_A_COLS];
   __shared__ float sh_B[TILE_A_COLS][TILE_B_COLS];
 
-  float dot_prod[COARSE_FACTOR] = {0.0f};
+  float accum[COARSE_FACTOR] = {0.0f};
   for (int tile = 0; tile < num_tiles; ++tile) {
-    if (block_y * TILE_A_ROWS + A_view_y < M && tile * TILE_A_COLS + A_view_x < K) {
-      sh_A[A_view_y][A_view_x]
-          = A[(block_y * TILE_A_ROWS + A_view_y) * K + tile * TILE_A_COLS + A_view_x];
+    // This thread loads one A element:
+    // global A[block_row*TILE_A_ROWS + a_load_row, tile*TILE_A_COLS + a_load_k]
+    //   -> sh_A[a_load_row][a_load_k].
+    if (block_row * TILE_A_ROWS + a_load_row < M && tile * TILE_A_COLS + a_load_k < K) {
+      sh_A[a_load_row][a_load_k]
+          = A[(block_row * TILE_A_ROWS + a_load_row) * K + tile * TILE_A_COLS + a_load_k];
     } else {
-      sh_A[A_view_y][A_view_x] = 0.0f;
+      sh_A[a_load_row][a_load_k] = 0.0f;
     }
 
-    if (tile * TILE_A_COLS + B_view_y < K && block_x * TILE_B_COLS + B_view_x < N) {
-      sh_B[B_view_y][B_view_x]
-          = B[(tile * TILE_A_COLS + B_view_y) * N + block_x * TILE_B_COLS + B_view_x];
+    // This thread loads one B element:
+    // global B[tile*TILE_A_COLS + b_load_k, block_col*TILE_B_COLS + b_load_col]
+    //   -> sh_B[b_load_k][b_load_col].
+    if (tile * TILE_A_COLS + b_load_k < K && block_col * TILE_B_COLS + b_load_col < N) {
+      sh_B[b_load_k][b_load_col]
+          = B[(tile * TILE_A_COLS + b_load_k) * N + block_col * TILE_B_COLS + b_load_col];
     } else {
-      sh_B[B_view_y][B_view_x] = 0.0f;
+      sh_B[b_load_k][b_load_col] = 0.0f;
     }
     __syncthreads();
 
-    // Register blocking: reuse one B value across COARSE_FACTOR rows before moving to the next K
-    // step.
+    // One shared B value is reused across COARSE_FACTOR output rows from the same thread.
     for (int k_tile = 0; k_tile < TILE_A_COLS; ++k_tile) {
-      const float B_val = sh_B[k_tile][B_view_x];
+      const float b_val = sh_B[k_tile][thread_col];
       for (int c = 0; c < COARSE_FACTOR; ++c) {
-        dot_prod[c] += sh_A[B_view_y * COARSE_FACTOR + c][k_tile] * B_val;
+        accum[c] += sh_A[c_row_group * COARSE_FACTOR + c][k_tile] * b_val;
       }
     }
     __syncthreads();
   }
 
   for (int c = 0; c < COARSE_FACTOR; ++c) {
-    if (row + c < M && col < N) { C[(row + c) * N + col] = dot_prod[c]; }
+    if (c_row0 + c < M && c_col < N) { C[(c_row0 + c) * N + c_col] = accum[c]; }
   }
 }
 

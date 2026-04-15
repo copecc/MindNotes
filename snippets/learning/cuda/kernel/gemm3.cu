@@ -5,48 +5,55 @@ __global__ void tiled_kernel(float *A, float *B, float *C, int M, int N, int K) 
   assert(TILE_WIDTH == blockDim.x);
   assert(TILE_WIDTH == blockDim.y);
 
-  const int block_x  = blockIdx.x;
-  const int block_y  = blockIdx.y;
-  const int thread_x = threadIdx.x;
-  const int thread_y = threadIdx.y;
+  const int block_col = blockIdx.x;
+  const int block_row = blockIdx.y;
+  const int thread_col = threadIdx.x;
+  const int thread_row = threadIdx.y;
 
-  // One thread still owns one output element C[row, col], but the block reuses a TILE_WIDTH x
-  // TILE_WIDTH patch.
-  const int row       = TILE_WIDTH * block_y + thread_y;
-  const int col       = TILE_WIDTH * block_x + thread_x;
+  // One block computes the C tile
+  // C[block_row*TILE_WIDTH:(block_row+1)*TILE_WIDTH,
+  //   block_col*TILE_WIDTH:(block_col+1)*TILE_WIDTH].
+  // One thread computes one output element C[c_row, c_col].
+  const int c_row     = TILE_WIDTH * block_row + thread_row;
+  const int c_col     = TILE_WIDTH * block_col + thread_col;
   const int num_tiles = (K + TILE_WIDTH - 1) / TILE_WIDTH;
 
-  // sh_A holds A[block_y*TILE_WIDTH:(block_y+1)*TILE_WIDTH, tile*TILE_WIDTH:(tile+1)*TILE_WIDTH],
-  // sh_B holds B[tile*TILE_WIDTH:(tile+1)*TILE_WIDTH, block_x*TILE_WIDTH:(block_x+1)*TILE_WIDTH].
+  // For each tile in K:
+  // sh_A[row_in_tile][k_in_tile] <- A[block_row tile, current K tile]
+  // sh_B[k_in_tile][col_in_tile] <- B[current K tile, block_col tile]
   __shared__ float sh_A[TILE_WIDTH][TILE_WIDTH];
   __shared__ float sh_B[TILE_WIDTH][TILE_WIDTH];
 
-  float dot_prod = 0;
+  float accum = 0.0f;
   for (int tile = 0; tile < num_tiles; ++tile) {
-    // Each thread loads one element of A and one element of B into shared memory.
-    // Boundary checks handle edge cases when M/N/K is not divisible by TILE_WIDTH.
-    if (row < M && tile * TILE_WIDTH + thread_x < K) {
-      sh_A[thread_y][thread_x] = A[row * K + tile * TILE_WIDTH + thread_x];
+    // This thread loads one A element:
+    // global A[c_row, tile*TILE_WIDTH + thread_col]
+    //   -> sh_A[thread_row][thread_col].
+    if (c_row < M && tile * TILE_WIDTH + thread_col < K) {
+      sh_A[thread_row][thread_col] = A[c_row * K + tile * TILE_WIDTH + thread_col];
     } else {
-      sh_A[thread_y][thread_x] = 0.0f;
+      sh_A[thread_row][thread_col] = 0.0f;
     }
 
-    if (tile * TILE_WIDTH + thread_y < K && col < N) {
-      sh_B[thread_y][thread_x] = B[(tile * TILE_WIDTH + thread_y) * N + col];
+    // This thread loads one B element:
+    // global B[tile*TILE_WIDTH + thread_row, c_col]
+    //   -> sh_B[thread_row][thread_col].
+    if (tile * TILE_WIDTH + thread_row < K && c_col < N) {
+      sh_B[thread_row][thread_col] = B[(tile * TILE_WIDTH + thread_row) * N + c_col];
     } else {
-      sh_B[thread_y][thread_x] = 0.0f;
+      sh_B[thread_row][thread_col] = 0.0f;
     }
 
     __syncthreads();
 
-    // Shared memory turns K-step global loads into tile reuse inside the block.
+    // Shared-memory tiles are reused by all threads in the block across this K slice.
     for (int k_tile = 0; k_tile < TILE_WIDTH; ++k_tile) {
-      dot_prod += sh_A[thread_y][k_tile] * sh_B[k_tile][thread_x];
+      accum += sh_A[thread_row][k_tile] * sh_B[k_tile][thread_col];
     }
     __syncthreads();
   }
 
-  if (row < M && col < N) { C[row * N + col] = dot_prod; }
+  if (c_row < M && c_col < N) { C[c_row * N + c_col] = accum; }
 }
 
 void gemm3(float *A, float *B, float *C, int M, int N, int K) {
