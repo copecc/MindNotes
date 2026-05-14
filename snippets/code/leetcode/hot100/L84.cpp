@@ -6,7 +6,7 @@ using namespace std;
 class Solution {
  public:
   int largestRectangleArea(vector<int> &heights) {
-    heights.push_back(0);
+    heights.push_back(0);  // 末尾补哨兵，强制把栈中所有柱子结算完。
     stack<int> st;
     int ans = 0;
     for (int i = 0; i < heights.size(); ++i) {

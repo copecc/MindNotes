@@ -20,7 +20,7 @@ class Solution {
         if (pre >= 0 && s[pre] == '(') {
           dp[i] = dp[i - 1] + 2;
           if (pre >= 1) {
-            dp[i] += dp[pre - 1];
+            dp[i] += dp[pre - 1];  // 把左侧已经成型的有效串一并接上。
           }
         }
       }
@@ -29,3 +29,4 @@ class Solution {
     return ans;
   }
 };
+

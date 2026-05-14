@@ -13,7 +13,7 @@ class Solution {
         dq.pop_front();
       }
       while (!dq.empty() && nums[dq.back()] <= nums[i]) {
-        dq.pop_back();
+        dq.pop_back();  // 队尾更小的下标不可能再成为后续窗口最大值。
       }
       dq.push_back(i);
       if (i >= k - 1) {

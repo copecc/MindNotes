@@ -31,6 +31,7 @@ class MedianFinder {
   }
 
  private:
-  priority_queue<int> small_;
-  priority_queue<int, vector<int>, greater<int>> large_;
+  priority_queue<int> small_;  // 保存较小一半，堆顶是这一半的最大值。
+  priority_queue<int, vector<int>, greater<int>> large_;  // 保存较大一半，堆顶是这一半的最小值。
 };
+

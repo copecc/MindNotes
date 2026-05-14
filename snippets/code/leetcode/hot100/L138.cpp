@@ -13,7 +13,7 @@ class Solution {
 
     for (Node *cur = head; cur; cur = cur->next) {
       copy[cur]->next = cur->next ? copy[cur->next] : nullptr;
-      copy[cur]->random = cur->random ? copy[cur->random] : nullptr;
+      copy[cur]->random = cur->random ? copy[cur->random] : nullptr;  // 先建映射，再按映射补边。
     }
 
     return copy[head];

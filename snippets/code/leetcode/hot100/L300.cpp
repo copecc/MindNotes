@@ -11,7 +11,7 @@ class Solution {
       if (it == tails.end()) {
         tails.push_back(num);
       } else {
-        *it = num;
+        *it = num;  // 把同长度子序列的结尾压到更小，为后续数字留空间。
       }
     }
     return tails.size();

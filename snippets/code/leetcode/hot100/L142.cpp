@@ -12,9 +12,10 @@ class Solution {
           slow = slow->next;
           fast = fast->next;
         }
-        return slow;
+        return slow;  // 第二次相遇点就是环入口。
       }
     }
     return nullptr;
   }
 };
+

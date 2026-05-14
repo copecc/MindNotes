@@ -16,7 +16,7 @@ class Solution {
       }
       tail = tail->next;
     }
-    tail->next = list1 ? list1 : list2;
+    tail->next = list1 ? list1 : list2;  // 剩余部分本身已经有序，可以整体接上。
     return dummy.next;
   }
 };

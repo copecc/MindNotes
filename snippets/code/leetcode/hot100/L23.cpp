@@ -17,7 +17,7 @@ class Solution {
     while (!pq.empty()) {
       ListNode *node = pq.top();
       pq.pop();
-      if (node->next) pq.push(node->next);
+      if (node->next) pq.push(node->next);  // 只把当前链表的下一个候选头补回堆里。
       tail->next = node;
       tail = tail->next;
     }

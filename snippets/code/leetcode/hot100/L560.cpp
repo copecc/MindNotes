@@ -13,10 +13,11 @@ class Solution {
       sum += x;
       auto it = cnt.find(sum - k);
       if (it != cnt.end()) {
-        ans += it->second;
+        ans += it->second;  // 先统计以当前位置结尾的答案，再把当前前缀和加入计数。
       }
       ++cnt[sum];
     }
     return ans;
   }
 };
+

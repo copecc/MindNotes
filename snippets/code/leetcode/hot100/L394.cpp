@@ -15,7 +15,7 @@ class Solution {
         num = num * 10 + (c - '0');
       } else if (c == '[') {
         cnt.push(num);
-        str.push(cur);
+        str.push(cur);  // 进入新层前先保存外层上下文。
         num = 0;
         cur.clear();
       } else if (c == ']') {

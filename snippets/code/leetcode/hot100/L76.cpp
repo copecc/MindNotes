@@ -29,7 +29,7 @@ class Solution {
           bestLeft = left;
         }
         if (++need[s[left]] > 0) {
-          ++missing;
+          ++missing;  // 左端字符一旦重新变成必需项，窗口就不再覆盖 t。
         }
         ++left;
       }

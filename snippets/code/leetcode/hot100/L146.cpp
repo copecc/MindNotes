@@ -16,7 +16,7 @@ class LRUCache {
   int get(int key) {
     auto it = pos.find(key);
     if (it == pos.end()) return -1;
-    cache.splice(cache.begin(), cache, it->second);
+    cache.splice(cache.begin(), cache, it->second);  // O(1) 挪到表头，刷新最近使用顺序。
     return it->second->second;
   }
 
@@ -37,3 +37,4 @@ class LRUCache {
     pos[key] = cache.begin();
   }
 };
+
